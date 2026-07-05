@@ -256,7 +256,7 @@
 </div>
 
 <script>
-    // BANCO COMPLETO DE 30 PREGUNTAS (Sin palabras de terrazas, ajustado a 'tarea')
+    // BANCO DE 32 PREGUNTAS ACTUALIZADO SEGÚN TU LISTA CORREGIDA
     const questionBank = [
         {
             icon: "📋", tag: "PRE-USO Y ENTORNO", color: "var(--primary-gold)",
@@ -348,7 +348,6 @@
             correct: "B", avatar: "🛡️",
             family: "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."
         },
-        // --- NUEVAS PREGUNTAS HASTA COMPLETAR 30 ---
         {
             icon: "↪️", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
             title: "Señal de Curva Pronunciada",
@@ -390,7 +389,7 @@
             title: "Velocidad en Zona de Talleres",
             desc: "Ingresas al área de talleres mecánicos y parqueos de la tarea. No visualizas letreros de velocidad en la entrada, pero hay personal caminando.",
             optA: "A) Reducir la velocidad al límite máximo establecido para talleres y parqueos (10 a 15 km/h).",
-            optB: "B)  Mantener la velocidad estándar de rutas internas (40 km/h) tocando la bocina intermitentemente.",
+            optB: "B) Mantener la velocidad estándar de rutas internas (40 km/h) tocando la bocina intermitentemente.",
             correct: "A", avatar: "🚶",
             family: "En los talleres caminan tus compañeros de trabajo. Ve despacio, cuida sus vidas y la tuya."
         },
@@ -497,8 +496,8 @@
             icon: "🔙", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
             title: "Maniobra de Retroceso",
             desc: "Vas a retroceder tu camioneta en la zona de operaciones de la tarea para cuadrarte. No cuentas con sensor de retroceso activo.",
-            optA: "A) Activar sonsor, tocar tres veces la bocina, esperar 3 segundos, verificar puntos ciegos y retroceder despacio.",
-            optB: "B) Retroceder rápido confiando plenamente en la visibilidad de tus tres espejos retrovisores.",,
+            optA: "A) Activar sensor, tocar tres veces la bocina, esperar 3 segundos, verificar puntos ciegos y retroceder despacio.",
+            optB: "B) Retroceder rápido confiando plenamente en la visibilidad de tus tres espejos retrovisores.",
             correct: "A", avatar: "🛑",
             family: "Toca la bocina antes de retroceder, avisa el movimiento. Alguien podría estar oculto detrás."
         },
@@ -525,7 +524,7 @@
             title: "Uso de la Radio de Comunicación",
             desc: "Necesitas reportar tu ingreso a una rampa, pero la frecuencia radial se encuentra saturada con coordinaciones de otra área.",
             optA: "A) Esperar que la frecuencia quede libre, modular de forma clara, corta y precisa tu mensaje.",
-            optB: "B)  Presionar el botón PTT e interrumpir rápidamente para registrar tu ingreso antes de entrar a la rampa.",
+            optB: "B) Presionar el botón PTT e interrumpir rápidamente para registrar tu ingreso antes de entrar a la rampa.",
             correct: "A", avatar: "📻",
             family: "La radio es para coordinar seguridad, no para saturarla. Escucha primero por tu seguridad."
         },
@@ -555,9 +554,8 @@
     let errorInLevel = false;
     let audioCtx = null;
     
-    // VARIABLES PARA LA LÓGICA ALEATORIA
     let currentQuestions = [];
-    let currentStepIndex = 0; // Va de 0 a 9 para las 10 preguntas seleccionadas
+    let currentStepIndex = 0;
 
     function playSound(type) {
         try {
@@ -600,7 +598,6 @@
         }
     }
 
-    // FUNCIÓN DE SELECCIÓN ALEATORIA DE PREGUNTAS
     function getRandomQuestions(bank, count) {
         let shuffled = [...bank].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, count);
@@ -618,7 +615,6 @@
         score = 0; lives = 3; errorInLevel = false;
         currentStepIndex = 0;
         
-        // Seleccionamos 10 preguntas aleatorias del banco de 30
         currentQuestions = getRandomQuestions(questionBank, 10);
         
         document.getElementById('current-score').innerText = score;
@@ -635,7 +631,6 @@
         
         const q = currentQuestions[index];
         
-        // Renderizar elementos en el HTML
         document.getElementById('lvl-icon').innerText = q.icon;
         document.getElementById('lvl-tag').innerText = q.tag;
         document.getElementById('lvl-graphic-box').style.borderLeft = `5px solid ${q.color}`;
@@ -648,14 +643,12 @@
         btnA.innerText = q.optA;
         btnB.innerText = q.optB;
         
-        // Reconfigurar los eventos onClick limpios
         btnA.onclick = () => evaluateAnswer('A', q.correct);
         btnB.onclick = () => evaluateAnswer('B', q.correct);
     }
 
     function evaluateAnswer(selected, correct) {
         if (selected !== correct) {
-            // Respuesta incorrecta -> Muestra alerta familiar
             playSound('error');
             const q = currentQuestions[currentStepIndex];
             document.getElementById('popup-avatar').innerText = q.avatar;
@@ -673,7 +666,6 @@
                 setTimeout(() => { showScreen('screen-gameover'); }, 2500); 
             }
         } else {
-            // Respuesta correcta -> Avanza de nivel
             playSound('success');
             if (!errorInLevel) {
                 score += 10;
@@ -685,7 +677,6 @@
             if (currentStepIndex < 10) {
                 loadQuestion(currentStepIndex);
             } else {
-                // Completó las 10 preguntas con éxito
                 document.getElementById('congrats-text').innerHTML = `Colaborador: <strong>${workerData.name}</strong><br>Área/Tarea: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
                 document.getElementById('final-score').innerText = score;
                 showScreen('screen-end');
