@@ -57,7 +57,7 @@
             padding: 12px 15px;
             border-radius: 12px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             border: 1px solid #1e293b;
             margin-bottom: 15px;
         }
@@ -77,12 +77,11 @@
         }
         .game-img-box {
             width: 100%;
-            height: 220px;
+            height: 200px;
             border-radius: 16px;
             margin-bottom: 15px;
             border: 2px solid #475569;
             overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
             background-color: #111827;
             position: relative;
         }
@@ -91,7 +90,6 @@
             height: 100%;
             object-fit: cover;
         }
-        /* Alerta visual para niveles interactivos */
         .level-graphic {
             width: 100%;
             height: 100%;
@@ -102,14 +100,8 @@
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
         .level-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
+            font-size: 45px;
+            margin-bottom: 5px;
         }
         .screen { display: none; }
         .active { display: block; }
@@ -124,23 +116,20 @@
             color: #fff;
             box-sizing: border-box;
             font-size: 16px;
-            transition: 0.3s;
         }
-        input:focus { border-color: var(--neon-green); outline: none; box-shadow: 0 0 10px rgba(16,185,129,0.3); }
 
         button {
             background: linear-gradient(180deg, #3b82f6, #1d4ed8);
             color: white;
             border: none;
-            padding: 16px;
-            font-size: 16px;
+            padding: 15px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 12px;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
             box-shadow: 0 4px 0 #1e40af;
-            transition: 0.1s;
             text-transform: uppercase;
         }
         button:active {
@@ -153,8 +142,9 @@
             text-align: left;
             box-shadow: 0 4px 0 #1e293b;
             border: 1px solid #475569;
-            font-size: 14px;
+            font-size: 13.5px;
             line-height: 1.4;
+            margin-bottom: 8px;
         }
         .option-btn:hover { background: #475569; border-color: var(--primary-gold); }
 
@@ -162,150 +152,180 @@
             background: linear-gradient(145deg, #7f1d1d, #991b1b);
             border: 3px solid var(--primary-gold);
             border-radius: 16px;
-            padding: 15px;
-            margin-top: 15px;
+            padding: 12px;
+            margin-top: 10px;
             display: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
         .family-avatar-text {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: var(--primary-gold);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             float: left;
-            margin-right: 15px;
+            margin-right: 12px;
             border: 2px solid white;
         }
         .clear { clear: both; }
+
+        /* PANTALLA CANCELADA */
+        .cancel-title { color: #ef4444; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 5px; }
+        .cancel-subtitle { text-align: center; font-size: 16px; margin-bottom: 20px; }
+        .cancel-body { text-align: center; font-size: 14px; color: #cbd5e1; line-height: 1.5; margin-bottom: 25px; }
+        .cancel-icon-container { display: flex; justify-content: center; margin-bottom: 25px; font-size: 70px; }
+        .cancel-warning { text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+        .cancel-subwarning { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 30px; }
+        .btn-white { background: #f8fafc !important; color: #0f172a !important; box-shadow: 0 4px 0 #cbd5e1 !important; }
     </style>
 </head>
 <body>
 
 <div id="game-container">
-    <!-- CABECERA: Llama a tu archivo local de forma exacta -->
     <div class="corporate-header">
-        <img src="LOGO.jpg" alt="Inversiones Rogasac" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
-        <div id="alt-logo" style="display:none; font-weight:bold; color:#1e40af; font-size:18px;">INVERSIONES ROGASAC</div>
+        <img src="LOGO.jpg" alt="LOGO.jpg">
     </div>
 
     <div id="stats-viewer" style="display:none;">
-        <div class="stats-bar">
+        <div class="stats-bar"><span>LICENCIA INTERNA DEL CONDUCTOR</span></div>
+        <div class="stats-bar" style="margin-top:-10px;">
             <span>PUNTOS: <span id="current-score" style="color:var(--neon-green);">0</span></span>
             <span>VIDAS: <span id="current-lives" style="color:var(--neon-red);">❤️❤️❤️</span></span>
         </div>
-        <div class="progress-container">
-            <div id="p-bar" class="progress-bar"></div>
-        </div>
+        <div class="progress-container"><div id="p-bar" class="progress-bar"></div></div>
     </div>
 
-    <!-- MENÚ PRINCIPAL CON TU IMAGEN REAL DE LA MINA -->
+    <!-- PORTADA -->
     <div id="screen-register" class="screen active">
         <h2 style="color: var(--primary-gold); font-size: 21px; margin: 5px 0 12px 0; text-transform: uppercase; text-align: center;">Desafío Lagunas Norte</h2>
-        
-        <!-- PANTALLA DE INICIO: Llama de forma exacta al archivo de la mina -->
         <div class="game-img-box">
-            <img src="WhatsApp Image 2026-07-05 at 16.03.56.jpeg" alt="Mina Lagunas Norte" onerror="this.src=''; this.parentElement.innerHTML='<div class=\'level-graphic\'><div class=\'level-icon\'>⛰️</div><b style=\'color:var(--primary-gold)\'>LAGUNAS NORTE OPERACIONES</b></div>';">
+            <img src="WhatsApp Image 2026-07-05 at 16.03.56.jpeg" alt="Portada">
         </div>
-        
         <p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px; text-align: center;">Campaña de Seguridad: <strong>"Yo escucho a la prevención"</strong></p>
-        
         <input type="text" id="worker-name" placeholder="Nombres y Apellidos del Operador" required>
         <input type="text" id="worker-dni" placeholder="Número de DNI" required>
         <input type="text" id="worker-area" placeholder="Escribe tu Frente de Trabajo o Área" required>
-        
         <button onclick="startGame()" style="background: linear-gradient(180deg, #f59e0b, #d97706); color: #000; box-shadow: 0 4px 0 #b45309;">INICIAR TURNO SEGURO 🕹️</button>
     </div>
 
     <!-- PREGUNTA 1 -->
     <div id="screen-lvl1" class="screen">
-        <div class="game-img-box">
-            <div class="level-graphic" style="border-left: 5px solid var(--primary-gold);">
-                <div class="level-icon">🚜</div>
-                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Frente de Carguío e IPERC</span>
-            </div>
-        </div>
-        <h3 style="color:var(--primary-gold);">Nivel 1: Inspección de Pre-uso</h3>
-        <p style="font-size: 14px; text-align: left;">Hay retraso en la terraza de movimiento de tierras. El supervisor te pide arrancar el equipo sin hacer el Checklist.</p>
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--primary-gold);"><div class="level-icon">📋</div><span>PRE-USO Y ENTORNO</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 1: Presión en la Tarea</h3>
+        <p style="font-size: 14px;">Hay retraso en la tarea de movimiento de tierras. El supervisor te pide por radio arrancar el camión sin hacer el Checklist para no perder el ciclo.</p>
         <button class="option-btn" onclick="triggerFamilyPopup('lvl1')">A) Operar de inmediato para acelerar el ciclo y avanzar el carguío.</button>
-        <button class="option-btn" onclick="nextLevel(2, 25)">B) PARE, PIENSE, ACTÚE: Realizar la inspección y firmar el IPERC obligatorio.</button>
-        
-        <div id="popup-lvl1" class="family-alert">
-            <div class="family-avatar-text">👨‍👩‍👦</div>
-            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"Papá, un camión apurado no vale tu vida. Llena tu Checklist, te esperamos enteros en casa."</p>
-            <div class="clear"></div>
-        </div>
+        <button class="option-btn" onclick="nextLevel(2, 10)">B) PARE, PIENSE, ACTÚE: Realizar la inspección completa y firmar el IPERC obligatorio.</button>
+        <div id="popup-lvl1" class="family-alert"><div class="family-avatar-text">👨‍👩‍👦</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Papá, un camión apurado no vale tu life. Llena tu Checklist, te esperamos enteros en casa."</p><div class="clear"></div></div>
     </div>
 
     <!-- PREGUNTA 2 -->
     <div id="screen-lvl2" class="screen">
-        <div class="game-img-box">
-            <div class="level-graphic" style="border-left: 5px solid #a855f7;">
-                <div class="level-icon">🌫️</div>
-                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Alerta Climática Extrema</span>
-            </div>
-        </div>
-        <h3 style="color:var(--primary-gold);">Nivel 2: Condición Climática</h3>
-        <p style="font-size: 14px; text-align: left;">Una densa neblina invade las rampas de la mina. La visibilidad es menor a la distancia segura de frenado.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl2')">A) Encender neblineros y continuar la marcha guiándote de las luces del camión líder.</button>
-        <button class="option-btn" onclick="nextLevel(3, 25)">B) DERECHO A DECIR NO: Estacionar el equipo en zona segura y reportar por radio.</button>
-        
-        <div id="popup-lvl2" class="family-alert">
-            <div class="family-avatar-text">❤️</div>
-            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"No manejes a ciegas en la mina. Detente por favor, tus hijos quieren abrazarte mañana."</p>
-            <div class="clear"></div>
-        </div>
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--primary-gold);"><div class="level-icon">🪪</div><span>DOCUMENTOS EN RUTA</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 2: Documentación Obligatoria</h3>
+        <p style="font-size: 14px;">Vas a iniciar ruta escoltando una unidad. Te percatas de que olvidaste tu Licencia Interna de Conductor (LICO) física en el campamento, pero la tienes en foto en tu celular.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl2')">A) Iniciar la ruta confiando en que la foto del celular es suficiente respaldo ante una inspección.</button>
+        <button class="option-btn" onclick="nextLevel(3, 10)">B) REGLAMENTO DE TRÁNSITO: Retornar a recoger el documento físico. Está prohibido conducir sin portar la LICO física.</button>
+        <div id="popup-lvl2" class="family-alert"><div class="family-avatar-text">🪪</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Hijo, las normas salvan vidas. Haz las cosas bien desde el principio para que regreses con bien."</p><div class="clear"></div></div>
     </div>
 
     <!-- PREGUNTA 3 -->
     <div id="screen-lvl3" class="screen">
-        <div class="game-img-box">
-            <div class="level-graphic" style="border-left: 5px solid var(--neon-red);">
-                <div class="level-icon">⚠️</div>
-                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Zonas Ciegas - Puntos Críticos</span>
-            </div>
-        </div>
-        <h3 style="color:var(--primary-gold);">Nivel 3: Línea de Fuego</h3>
-        <p style="font-size: 14px; text-align: left;">Vas a pie a coordinar con un operador de excavadora y sabes que pasarás por el punto ciego de sus espejos.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl3')">A) Cruzar corriendo por detrás confiando en que el operador está atento.</button>
-        <button class="option-btn" onclick="nextLevel(4, 25)">B) Quedarse fuera de la línea de fuego y buscar contacto radial o visual positivo.</button>
-        
-        <div id="popup-lvl3" class="family-alert">
-            <div class="family-avatar-text">🏠</div>
-            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"¡Ten cuidado! Las máquinas pesadas son gigantes, haz que te vean. No te expongas."</p>
-            <div class="clear"></div>
-        </div>
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #a855f7;"><div class="level-icon">🌫️</div><span>VELOCIDAD EN RUTA</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 3: Límite de Velocidad en Neblina</h3>
+        <p style="font-size: 14px;">Una densa neblina invade las rampas principales de la tarea. La visibilidad baja a menos de 20 metros. El letrero indica "Velocidad Máxima 40 km/h".</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl3')">A) Mantener los 40 km/h permitidos confiando en tus neblineros y tu experiencia en la ruta.</button>
+        <button class="option-btn" onclick="nextLevel(4, 10)">B) REGLAMENTO DE TRÁNSITO: Reducir la velocidad por debajo del límite adaptándola a la visibilidad o pararte en zona segura.</button>
+        <div id="popup-lvl3" class="family-alert"><div class="family-avatar-text">❤️</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "No manejes a ciegas en la mina. Detente o baja la velocidad, tus hijos quieren abrazarte mañana."</p><div class="clear"></div></div>
     </div>
 
     <!-- PREGUNTA 4 -->
     <div id="screen-lvl4" class="screen">
-        <div class="game-img-box">
-            <div class="level-graphic" style="border-left: 5px solid #3b82f6;">
-                <div class="level-icon">🥱</div>
-                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Guardia Nocturna - Monitoreo</span>
-            </div>
-        </div>
-        <h3 style="color:var(--primary-gold);">Nivel 4: Fatiga y Somnolencia</h3>
-        <p style="font-size: 14px; text-align: left;">Es el cambio de guardia de amanecida y sientes pesadez en los párpados y cabeceos constantes en ruta.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl4')">A) Abrir las ventanas para ventilar el frío, tomar café y aguantar hasta el final.</button>
-        <button class="option-btn" onclick="nextLevel(5, 25)">B) Alerta de Fatiga: Estacionar el camión en lugar seguro de inmediato y avisar por radio.</button>
-        
-        <div id="popup-lvl4" class="family-alert">
-            <div class="family-avatar-text">👪</div>
-            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"El sueño le gana al más fuerte. No arriesgues tu vida por un viaje más. ¡Para el equipo!"</p>
-            <div class="clear"></div>
-        </div>
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #a855f7;"><div class="level-icon">🚜</div><span>PREFERENCIAS DE PASO</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 4: Intersección No Regulada</h3>
+        <p style="font-size: 14px;">Luegos a un cruce en "T" al mismo tiempo que un camión minero pesado que viene por tu izquierda. No hay señalización de "PARE".</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl4')">A) Avanzar rápido ya que tú vas en línea recta y el equipo pesado viene por la izquierda.</button>
+        <button class="option-btn" onclick="nextLevel(5, 10)">B) REGLAMENTO DE TRÁNSITO: Ceder el paso. Los vehículos mayores tienen preferencia absoluta por sus amplias zonas ciegas.</button>
+        <div id="popup-lvl4" class="family-alert"><div class="family-avatar-text">🛑</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "¡Cuidado! Contra un gigante no hay opción. Dale siempre preferencia a los equipos pesados."</p><div class="clear"></div></div>
     </div>
 
-    <!-- FIN DEL JUEGO -->
+    <!-- PREGUNTA 5 -->
+    <div id="screen-lvl5" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-red);"><div class="level-icon">🚫</div><span>MANIOBRAS CRÍTICAS</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 5: Adelantamiento en Rampa</h3>
+        <p style="font-size: 14px;">Vas detrás de un tractor de oruga que se desplaza lento en una rampa de subida de la tarea. Estás apurado y ves un tramo libre en una curva ligera.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl5')">A) Adelantar rápidamente tocando la bocina para que el tractor se apegue a la berma lateral.</button>
+        <button class="option-btn" onclick="nextLevel(6, 10)">B) REGLAMENTO DE TRÁNSITO: Mantener la distancia. Está prohibido adelantar en curvas, rampas o pendientes.</button>
+        <div id="popup-lvl5" class="family-alert"><div class="family-avatar-text">🏠</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Un minuto de paciencia te asegura toda una vida con nosotros. No te adelantes al peligro."</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PREGUNTA 6 -->
+    <div id="screen-lvl6" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-red);"><div class="level-icon">⚠️</div><span>LÍNEA DE FUEGO</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 6: Punto Ciego de Excavadora</h3>
+        <p style="font-size: 14px;">Bajas a pie en el frente para coordinar con el operador de una excavadora. Para llegar a él, tu trayectoria pasa por detrás del equipo en funcionamiento.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl6')">A) Cruzar caminando rápido por detrás confiando en que el operador mirará sus espejos en ese instante.</button>
+        <button class="option-btn" onclick="nextLevel(7, 10)">B) LÍNEA DE FUEGO: Mantenerse fuera. Buscar contacto radial o esperar el pase visual positivo del operador.</button>
+        <div id="popup-lvl6" class="family-alert"><div class="family-avatar-text">🚶</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "¡No te expongas a los gigantes de acero! Si el operador no te ve, estás en grave peligro."</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PREGUNTA 7 -->
+    <div id="screen-lvl7" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #3b82f6;"><div class="level-icon">📵</div><span>DISTRACTORES</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 7: Uso de Equipos de Comunicación</h3>
+        <p style="font-size: 14px;">Mientras conduces el camión hacia el botadero, vibra tu teléfono celular personal dentro del bolsillo con una alerta de mensaje familiar urgente.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl7')">A) Sacar el celular y leer el mensaje rápidamente en un tramo recto donde vas a baja velocidad.</button>
+        <button class="option-btn" onclick="nextLevel(8, 10)">B) REGLAMENTO DE TRÁNSITO: Mantener manos al volante. Prohibido usar celulares en movimiento. Si urge, cuadra en zona segura.</button>
+        <div id="popup-lvl7" class="family-alert"><div class="family-avatar-text">📵</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Ningún mensaje es más importante que tu vida. Mantén tus ojos siempre en la ruta."</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PREGUNTA 8 -->
+    <div id="screen-lvl8" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #3b82f6;"><div class="level-icon">🥱</div><span>ALERTA DE FATIGA</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 8: Cambio de Guardia Nocturna</h3>
+        <p style="font-size: 14px;">Es la última hora de la guardia de amanecida en la tarea y sientes pesadez extrema en los párpados, experimentando cabeceos constantes en ruta.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl8')">A) Abrir las ventanas para que entre el aire frío, subir el volumen de la radio y aguantar la última vuelta.</button>
+        <button class="option-btn" onclick="nextLevel(9, 10)">B) ALERTA DE FATIGA: Estacionar de inmediato en el lugar seguro más cercano, reportar por radio y solicitar descanso preventivo.</button>
+        <div id="popup-lvl8" class="family-alert"><div class="family-avatar-text">👪</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "El sueño le gana al operador más fuerte. No arriesgues tu vida por terminar el turno. ¡Para el equipo!"</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PREGUNTA 9 -->
+    <div id="screen-lvl9" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-green);"><div class="level-icon">🛑</div><span>PARQUEO SEGURO</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 9: Estacionamiento Seguro</h3>
+        <p style="font-size: 14px;">Luegos a la zona de talleres al finalizar la guardia. Tienes prisa por subir al bus, así que cuadras la camioneta en una ligera pendiente dejando solo el freno de mano.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl9')">A) Apagar el motor, activar el freno de parqueo e irte rápido porque la pendiente es mínima.</button>
+        <button class="option-btn" onclick="nextLevel(10, 10)">B) REGLAMENTO DE TRÁNSITO: Enganchar el vehículo en cambio, aplicar freno de mano y colocar obligatoriamente los tacos/tunas.</button>
+        <div id="popup-lvl9" class="family-alert"><div class="family-alert-text">🛑</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Asegura bien tu herramienta de trabajo. Un error al final del día puede cambiarlo todo."</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PREGUNTA 10 -->
+    <div id="screen-lvl10" class="screen">
+        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-green);"><div class="level-icon">🛡️</div><span>PROTECCIÓN DE VIDA</span></div></div>
+        <h3 style="color:var(--primary-gold);">Nivel 10: Uso del Cinturón de Seguridad</h3>
+        <p style="font-size: 14px;">Vas a mover el camión una distancia mínima de 50 metros dentro de la misma plataforma de descarga para reacomodar material. ¿Es necesario el cinturón?</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl10')">A) Avanzar despacio sin el cinturón puesto para ahorrar tiempo, ya que es un tramo muy corto.</button>
+        <button class="option-btn" onclick="nextLevel(11, 10)">B) REGLAMENTO DE TRÁNSITO: Abrocharse el cinturón. Su uso es obligatorio en todo momento y distancia sin excepciones.</button>
+        <div id="popup-lvl10" class="family-alert"><div class="family-avatar-text">🛡️</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."</p><div class="clear"></div></div>
+    </div>
+
+    <!-- PANTALLA: LICENCIA INTERNA SUSPENDIDA -->
+    <div id="screen-gameover" class="screen">
+        <div class="cancel-title">🛑 LICENCIA INTERNA SUSPENDIDA</div>
+        <div class="cancel-subtitle">Atención, compañero <span id="gameover-name" style="color: var(--primary-gold); font-weight: bold;">e</span>.</div>
+        <div class="cancel-body">Has acumulado alertas críticas de seguridad en esta simulación y tu turno se ha detenido para priorizar tu vida.</div>
+        <div class="cancel-icon-container">🚫</div>
+        <div class="cancel-warning">🚨 YA NO PUEDES CONDUCIR NI OPERAR EN LA UNIDAD MINERA.</div>
+        <div class="cancel-subwarning">La prevención no es una regla, es el compromiso de regresar con tu familia.</div>
+        <button class="btn-white" onclick="restartGame()">VOLVER A EMPEZAR EL TURNO</button>
+    </div>
+
+    <!-- FIN DEL JUEGO (ÉXITO) -->
     <div id="screen-end" class="screen">
         <h2 style="color: var(--neon-green); text-align: center;">🏆 ¡GUARDIA PERFECTA!</h2>
         <p id="congrats-text" style="font-size:14px; line-height: 1.5; text-align: center;"></p>
-        <p style="font-size:14px; text-align: center;">Lograste operar con Cero Accidentes protegiendo tu vida y la de tus compañeros.</p>
-        
+        <p style="font-size:14px; text-align: center;">Lograste operar con Cero Accidentes manteniendo tu Licencia Interna del Conductor activa.</p>
         <div style="background: #090d16; padding: 20px; border-radius: 16px; border: 2px solid var(--neon-green); margin: 20px 0;">
             <p style="margin:0; font-size: 24px; color: var(--neon-green); font-weight: bold; text-align: center;">PUNTAJE: <span id="final-score">0</span> / 100 PTS</p>
             <p style="font-size: 11px; color: #64748b; margin-top:5px; text-transform: uppercase; text-align: center;">Tu registro está activo para la premiación oficial.</p>
@@ -319,48 +339,42 @@
     let score = 0;
     let lives = 3;
     let errorInLevel = false;
-
-    // Generador automático de sonidos Arcade (Web Audio API nativa sin internet)
     let audioCtx = null;
+
     function playSound(type) {
         try {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
+            osc.connect(gain); gain.connect(audioCtx.destination);
             if (type === 'success') {
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nota Re5
-                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // Nota La5
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); 
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
                 gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.15);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
             } else if (type === 'error') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(120, audioCtx.currentTime);
                 gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.25);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.25);
             }
-        } catch(e) { console.log("Audio no soportado o bloqueado."); }
+        } catch(e) {}
     }
 
     function updateLivesDisplay() {
         let hearts = "";
         for(let i=0; i<lives; i++) hearts += "❤️";
-        document.getElementById('current-lives').innerText = hearts || "GAME OVER";
+        document.getElementById('current-lives').innerText = hearts || "INACTIVA";
     }
 
     function setProgressBar(step) {
-        const percentage = (step - 1) * 25;
+        const percentage = (step - 1) * 10;
         document.getElementById('p-bar').style.width = percentage + "%";
     }
 
     function showScreen(id, step = 1) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if (id === 'screen-register' || id === 'screen-end') {
+        if (id === 'screen-register' || id === 'screen-end' || id === 'screen-gameover') {
             document.getElementById('stats-viewer').style.display = 'none';
         } else {
             document.getElementById('stats-viewer').style.display = 'block';
@@ -372,15 +386,12 @@
         const name = document.getElementById('worker-name').value;
         const dni = document.getElementById('worker-dni').value;
         const area = document.getElementById('worker-area').value;
-
         if(!name || !dni || !area) {
             alert("SISTEMA ROGASAC: Completa tus datos para iniciar el registro.");
             return;
         }
         workerData = { name, dni, area };
-        score = 0;
-        lives = 3;
-        errorInLevel = false;
+        score = 0; lives = 3; errorInLevel = false;
         document.getElementById('current-score').innerText = score;
         updateLivesDisplay();
         showScreen('screen-lvl1', 1);
@@ -395,8 +406,8 @@
             errorInLevel = true;
         }
         if (lives <= 0) {
-            alert("🚨 SEGURIDAD ROGASAC: Has acumulado incidentes de alto riesgo críticos. Turno suspendido. Hazle caso a tu familia y vuelve a iniciar.");
-            restartGame();
+            document.getElementById('gameover-name').innerText = workerData.name || "Operador";
+            setTimeout(() => { showScreen('screen-gameover'); }, 1800); 
         }
     }
 
@@ -407,12 +418,10 @@
             document.getElementById('current-score').innerText = score;
         }
         errorInLevel = false;
-
-        if(lvl === 2) showScreen('screen-lvl2', 2);
-        if(lvl === 3) showScreen('screen-lvl3', 3);
-        if(lvl === 4) showScreen('screen-lvl4', 4);
-        if(lvl === 5) {
-            document.getElementById('congrats-text').innerHTML = `Operador: <strong>${workerData.name}</strong><br>Frente: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
+        if(lvl <= 10) {
+            showScreen('screen-lvl' + lvl, lvl);
+        } else {
+            document.getElementById('congrats-text').innerHTML = `Operador: <strong>${workerData.name}</strong><br>Área/Tarea: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
             document.getElementById('final-score').innerText = score;
             showScreen('screen-end');
         }
