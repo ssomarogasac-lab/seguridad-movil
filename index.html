@@ -204,116 +204,37 @@
             <img src="WhatsApp Image 2026-07-05 at 16.03.56.jpeg" alt="Portada">
         </div>
         <p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px; text-align: center;">Campaña de Seguridad: <strong>"Yo escucho a la prevención"</strong></p>
-        <input type="text" id="worker-name" placeholder="Nombres y Apellidos del Operador" required>
+        <input type="text" id="worker-name" placeholder="Nombres y Apellidos" required>
         <input type="text" id="worker-dni" placeholder="Número de DNI" required>
         <input type="text" id="worker-area" placeholder="Escribe tu Frente de Trabajo o Área" required>
         <button onclick="startGame()" style="background: linear-gradient(180deg, #f59e0b, #d97706); color: #000; box-shadow: 0 4px 0 #b45309;">INICIAR TURNO SEGURO 🕹️</button>
     </div>
 
-    <!-- PREGUNTA 1 -->
-    <div id="screen-lvl1" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--primary-gold);"><div class="level-icon">📋</div><span>PRE-USO Y ENTORNO</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 1: Presión en la Tarea</h3>
-        <p style="font-size: 14px;">Hay retraso en la tarea de movimiento de tierras. El supervisor te pide por radio arrancar el camión sin hacer el Checklist para no perder el ciclo.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl1')">A) Operar de inmediato para acelerar el ciclo y avanzar el carguío.</button>
-        <button class="option-btn" onclick="nextLevel(2, 10)">B) PARE, PIENSE, ACTÚE: Realizar la inspección completa y firmar el IPERC obligatorio.</button>
-        <div id="popup-lvl1" class="family-alert"><div class="family-avatar-text">👨‍👩‍👦</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Papá, un camión apurado no vale tu life. Llena tu Checklist, te esperamos enteros en casa."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 2 -->
-    <div id="screen-lvl2" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--primary-gold);"><div class="level-icon">🪪</div><span>DOCUMENTOS EN RUTA</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 2: Documentación Obligatoria</h3>
-        <p style="font-size: 14px;">Vas a iniciar ruta escoltando una unidad. Te percatas de que olvidaste tu Licencia Interna de Conductor (LICO) física en el campamento, pero la tienes en foto en tu celular.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl2')">A) Iniciar la ruta confiando en que la foto del celular es suficiente respaldo ante una inspección.</button>
-        <button class="option-btn" onclick="nextLevel(3, 10)">B) REGLAMENTO DE TRÁNSITO: Retornar a recoger el documento físico. Está prohibido conducir sin portar la LICO física.</button>
-        <div id="popup-lvl2" class="family-alert"><div class="family-avatar-text">🪪</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Hijo, las normas salvan vidas. Haz las cosas bien desde el principio para que regreses con bien."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 3 -->
-    <div id="screen-lvl3" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #a855f7;"><div class="level-icon">🌫️</div><span>VELOCIDAD EN RUTA</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 3: Límite de Velocidad en Neblina</h3>
-        <p style="font-size: 14px;">Una densa neblina invade las rampas principales de la tarea. La visibilidad baja a menos de 20 metros. El letrero indica "Velocidad Máxima 40 km/h".</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl3')">A) Mantener los 40 km/h permitidos confiando en tus neblineros y tu experiencia en la ruta.</button>
-        <button class="option-btn" onclick="nextLevel(4, 10)">B) REGLAMENTO DE TRÁNSITO: Reducir la velocidad por debajo del límite adaptándola a la visibilidad o pararte en zona segura.</button>
-        <div id="popup-lvl3" class="family-alert"><div class="family-avatar-text">❤️</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "No manejes a ciegas en la mina. Detente o baja la velocidad, tus hijos quieren abrazarte mañana."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 4 -->
-    <div id="screen-lvl4" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #a855f7;"><div class="level-icon">🚜</div><span>PREFERENCIAS DE PASO</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 4: Intersección No Regulada</h3>
-        <p style="font-size: 14px;">Luegos a un cruce en "T" al mismo tiempo que un camión minero pesado que viene por tu izquierda. No hay señalización de "PARE".</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl4')">A) Avanzar rápido ya que tú vas en línea recta y el equipo pesado viene por la izquierda.</button>
-        <button class="option-btn" onclick="nextLevel(5, 10)">B) REGLAMENTO DE TRÁNSITO: Ceder el paso. Los vehículos mayores tienen preferencia absoluta por sus amplias zonas ciegas.</button>
-        <div id="popup-lvl4" class="family-alert"><div class="family-avatar-text">🛑</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "¡Cuidado! Contra un gigante no hay opción. Dale siempre preferencia a los equipos pesados."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 5 -->
-    <div id="screen-lvl5" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-red);"><div class="level-icon">🚫</div><span>MANIOBRAS CRÍTICAS</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 5: Adelantamiento en Rampa</h3>
-        <p style="font-size: 14px;">Vas detrás de un tractor de oruga que se desplaza lento en una rampa de subida de la tarea. Estás apurado y ves un tramo libre en una curva ligera.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl5')">A) Adelantar rápidamente tocando la bocina para que el tractor se apegue a la berma lateral.</button>
-        <button class="option-btn" onclick="nextLevel(6, 10)">B) REGLAMENTO DE TRÁNSITO: Mantener la distancia. Está prohibido adelantar en curvas, rampas o pendientes.</button>
-        <div id="popup-lvl5" class="family-alert"><div class="family-avatar-text">🏠</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Un minuto de paciencia te asegura toda una vida con nosotros. No te adelantes al peligro."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 6 -->
-    <div id="screen-lvl6" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-red);"><div class="level-icon">⚠️</div><span>LÍNEA DE FUEGO</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 6: Punto Ciego de Excavadora</h3>
-        <p style="font-size: 14px;">Bajas a pie en el frente para coordinar con el operador de una excavadora. Para llegar a él, tu trayectoria pasa por detrás del equipo en funcionamiento.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl6')">A) Cruzar caminando rápido por detrás confiando en que el operador mirará sus espejos en ese instante.</button>
-        <button class="option-btn" onclick="nextLevel(7, 10)">B) LÍNEA DE FUEGO: Mantenerse fuera. Buscar contacto radial o esperar el pase visual positivo del operador.</button>
-        <div id="popup-lvl6" class="family-alert"><div class="family-avatar-text">🚶</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "¡No te expongas a los gigantes de acero! Si el operador no te ve, estás en grave peligro."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 7 -->
-    <div id="screen-lvl7" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #3b82f6;"><div class="level-icon">📵</div><span>DISTRACTORES</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 7: Uso de Equipos de Comunicación</h3>
-        <p style="font-size: 14px;">Mientras conduces el camión hacia el botadero, vibra tu teléfono celular personal dentro del bolsillo con una alerta de mensaje familiar urgente.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl7')">A) Sacar el celular y leer el mensaje rápidamente en un tramo recto donde vas a baja velocidad.</button>
-        <button class="option-btn" onclick="nextLevel(8, 10)">B) REGLAMENTO DE TRÁNSITO: Mantener manos al volante. Prohibido usar celulares en movimiento. Si urge, cuadra en zona segura.</button>
-        <div id="popup-lvl7" class="family-alert"><div class="family-avatar-text">📵</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Ningún mensaje es más importante que tu vida. Mantén tus ojos siempre en la ruta."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 8 -->
-    <div id="screen-lvl8" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid #3b82f6;"><div class="level-icon">🥱</div><span>ALERTA DE FATIGA</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 8: Cambio de Guardia Nocturna</h3>
-        <p style="font-size: 14px;">Es la última hora de la guardia de amanecida en la tarea y sientes pesadez extrema en los párpados, experimentando cabeceos constantes en ruta.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl8')">A) Abrir las ventanas para que entre el aire frío, subir el volumen de la radio y aguantar la última vuelta.</button>
-        <button class="option-btn" onclick="nextLevel(9, 10)">B) ALERTA DE FATIGA: Estacionar de inmediato en el lugar seguro más cercano, reportar por radio y solicitar descanso preventivo.</button>
-        <div id="popup-lvl8" class="family-alert"><div class="family-avatar-text">👪</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "El sueño le gana al operador más fuerte. No arriesgues tu vida por terminar el turno. ¡Para el equipo!"</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 9 -->
-    <div id="screen-lvl9" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-green);"><div class="level-icon">🛑</div><span>PARQUEO SEGURO</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 9: Estacionamiento Seguro</h3>
-        <p style="font-size: 14px;">Luegos a la zona de talleres al finalizar la guardia. Tienes prisa por subir al bus, así que cuadras la camioneta en una ligera pendiente dejando solo el freno de mano.</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl9')">A) Apagar el motor, activar el freno de parqueo e irte rápido porque la pendiente es mínima.</button>
-        <button class="option-btn" onclick="nextLevel(10, 10)">B) REGLAMENTO DE TRÁNSITO: Enganchar el vehículo en cambio, aplicar freno de mano y colocar obligatoriamente los tacos/tunas.</button>
-        <div id="popup-lvl9" class="family-alert"><div class="family-alert-text">🛑</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Asegura bien tu herramienta de trabajo. Un error al final del día puede cambiarlo todo."</p><div class="clear"></div></div>
-    </div>
-
-    <!-- PREGUNTA 10 -->
-    <div id="screen-lvl10" class="screen">
-        <div class="game-img-box"><div class="level-graphic" style="border-left: 5px solid var(--neon-green);"><div class="level-icon">🛡️</div><span>PROTECCIÓN DE VIDA</span></div></div>
-        <h3 style="color:var(--primary-gold);">Nivel 10: Uso del Cinturón de Seguridad</h3>
-        <p style="font-size: 14px;">Vas a mover el camión una distancia mínima de 50 metros dentro de la misma plataforma de descarga para reacomodar material. ¿Es necesario el cinturón?</p>
-        <button class="option-btn" onclick="triggerFamilyPopup('lvl10')">A) Avanzar despacio sin el cinturón puesto para ahorrar tiempo, ya que es un tramo muy corto.</button>
-        <button class="option-btn" onclick="nextLevel(11, 10)">B) REGLAMENTO DE TRÁNSITO: Abrocharse el cinturón. Su uso es obligatorio en todo momento y distancia sin excepciones.</button>
-        <div id="popup-lvl10" class="family-alert"><div class="family-avatar-text">🛡️</div><p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."</p><div class="clear"></div></div>
+    <!-- PANTALLA DINÁMICA DE PREGUNTAS -->
+    <div id="screen-question" class="screen">
+        <div class="game-img-box">
+            <div id="lvl-graphic-box" class="level-graphic">
+                <div id="lvl-icon" class="level-icon">📋</div>
+                <span id="lvl-tag">PRE-USO Y ENTORNO</span>
+            </div>
+        </div>
+        <h3 id="lvl-title" style="color:var(--primary-gold);">Nivel 1: Carga Dinámica</h3>
+        <p id="lvl-desc" style="font-size: 14px;"></p>
+        
+        <button id="btn-opt-a" class="option-btn"></button>
+        <button id="btn-opt-b" class="option-btn"></button>
+        
+        <div id="family-popup" class="family-alert">
+            <div id="popup-avatar" class="family-avatar-text">👨‍👩‍👦</div>
+            <p style="font-size:13px; color:#fef08a;"><strong>Tu Familia:</strong> <span id="popup-text"></span></p>
+            <div class="clear"></div>
+        </div>
     </div>
 
     <!-- PANTALLA: LICENCIA INTERNA SUSPENDIDA -->
     <div id="screen-gameover" class="screen">
         <div class="cancel-title">🛑 LICENCIA INTERNA SUSPENDIDA</div>
-        <div class="cancel-subtitle">Atención, compañero <span id="gameover-name" style="color: var(--primary-gold); font-weight: bold;">e</span>.</div>
+        <div class="cancel-subtitle">Atención, compañero/a <span id="gameover-name" style="color: var(--primary-gold); font-weight: bold;"></span>.</div>
         <div class="cancel-body">Has acumulado alertas críticas de seguridad en esta simulación y tu turno se ha detenido para priorizar tu vida.</div>
         <div class="cancel-icon-container">🚫</div>
         <div class="cancel-warning">🚨 YA NO PUEDES CONDUCIR NI OPERAR EN LA UNIDAD MINERA.</div>
@@ -335,11 +256,308 @@
 </div>
 
 <script>
+    // BANCO COMPLETO DE 30 PREGUNTAS (Sin palabras de terrazas, ajustado a 'tarea')
+    const questionBank = [
+        {
+            icon: "📋", tag: "PRE-USO Y ENTORNO", color: "var(--primary-gold)",
+            title: "Presión en la Tarea",
+            desc: "Hay retraso en la tarea de movimiento de tierras. El supervisor te pide por radio arrancar el camión sin hacer el Checklist para no perder el ciclo.",
+            optA: "A) Operar de inmediato para acelerar el ciclo y avanzar el carguío.",
+            optB: "B) PARE, PIENSE, ACTÚE: Realizar la inspección completa y firmar el IPERC obligatorio.",
+            correct: "B", avatar: "👨‍👩‍👦",
+            family: "Papá, un camión apurado no vale tu vida. Llena tu Checklist, te esperamos enteros en casa."
+        },
+        {
+            icon: "🪪", tag: "DOCUMENTOS EN RUTA", color: "var(--primary-gold)",
+            title: "Documentación Obligatoria",
+            desc: "Vas a iniciar ruta escoltando una unidad. Te percatas de que olvidaste tu Licencia Interna de Conductor (LICO) física en el campamento, pero la tienes en foto en tu celular.",
+            optA: "A) Iniciar la ruta confiando en que la foto del celular es suficiente respaldo ante una inspección.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Retornar a recoger el documento físico. Está prohibido conducir sin portar la LICO física.",
+            correct: "B", avatar: "🪪",
+            family: "Hijo, las normas salvan vidas. Haz las cosas bien desde el principio para que regreses con bien."
+        },
+        {
+            icon: "🌫️", tag: "VELOCIDAD EN RUTA", color: "#a855f7",
+            title: "Límite de Velocidad en Neblina",
+            desc: "Una densa neblina invade las rampas principales de la tarea. La visibilidad baja a menos de 20 metros. El letrero indica 'Velocidad Máxima 40 km/h'.",
+            optA: "A) Mantener los 40 km/h permitidos confiando en tus neblineros y tu experiencia en la ruta.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Reducir la velocidad por debajo del límite adaptándola a la visibilidad o pararte en zona segura.",
+            correct: "B", avatar: "❤️",
+            family: "No manejes a ciegas en la mina. Detente o baja la velocidad, tus hijos quieren abrazarte mañana."
+        },
+        {
+            icon: "🚜", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Intersección No Regulada",
+            desc: "Luegos a un cruce en 'T' al mismo tiempo que un camión minero pesado que viene por tu izquierda. No hay señalización de 'PARE'.",
+            optA: "A) Avanzar rápido ya que tú vas en línea recta y el equipo pesado viene por la izquierda.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Ceder el paso. Los vehículos mayores tienen preferencia absoluta por sus amplias zonas ciegas.",
+            correct: "B", avatar: "🛑",
+            family: "¡Cuidado! Contra un gigante no hay opción. Dale siempre preferencia a los equipos pesados."
+        },
+        {
+            icon: "🚫", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
+            title: "Adelantamiento en Rampa",
+            desc: "Vas detrás de un tractor de oruga que se desplaza lento en una rampa de subida de la tarea. Estás apurado y ves un tramo libre en una curva ligera.",
+            optA: "A) Adelantar rápidamente tocando la bocina para que el tractor se apegue a la berma lateral.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Mantener la distancia. Está prohibido adelantar en curvas, rampas o pendientes.",
+            correct: "B", avatar: "🏠",
+            family: "Un minuto de paciencia te asegura toda una vida con nosotros. No te adelantes al peligro."
+        },
+        {
+            icon: "⚠️", tag: "LÍNEA DE FUEGO", color: "var(--neon-red)",
+            title: "Punto Ciego de Excavadora",
+            desc: "Bajas a pie en el frente para coordinar con el operador de una excavadora. Para llegar a él, tu trayectoria pasa por detrás del equipo en funcionamiento.",
+            optA: "A) Cruzar caminando rápido por detrás confiando en que el operador mirará sus espejos en ese instante.",
+            optB: "B) LÍNEA DE FUEGO: Mantenerse fuera. Buscar contacto radial o esperar el pase visual positivo del operador.",
+            correct: "B", avatar: "🚶",
+            family: "¡No te expongas a los gigantes de acero! Si el operador no te ve, estás en grave peligro."
+        },
+        {
+            icon: "📵", tag: "DISTRACTORES", color: "#3b82f6",
+            title: "Uso de Equipos de Comunicación",
+            desc: "Mientras conduces el camión hacia el botadero, vibra tu teléfono celular personal dentro del bolsillo con una alerta de mensaje familiar urgente.",
+            optA: "A) Sacar el celular y leer el mensaje rápidamente en un tramo recto donde vas a baja velocidad.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Mantener manos al volante. Prohibido usar celulares en movimiento. Si urge, cuadra en zona segura.",
+            correct: "B", avatar: "📵",
+            family: "Ningún mensaje es más importante que tu vida. Mantén tus ojos siempre en la ruta."
+        },
+        {
+            icon: "🥱", tag: "ALERTA DE FATIGA", color: "#3b82f6",
+            title: "Cambio de Guardia Nocturna",
+            desc: "Es la última hora de la guardia de amanecida en la tarea y sientes pesadez extrema en los párpados, experimentando cabeceos constantes en ruta.",
+            optA: "A) Abrir las ventanas para que entre el aire frío, subir el volumen de la radio y aguantar la última vuelta.",
+            optB: "B) ALERTA DE FATIGA: Estacionar de inmediato en el lugar seguro más cercano, reportar por radio y solicitar descanso preventivo.",
+            correct: "B", avatar: "👪",
+            family: "El sueño le gana al operador más fuerte. No arriesgues tu vida por terminar el turno. ¡Para el equipo!"
+        },
+        {
+            icon: "🛑", tag: "PARQUEO SEGURO", color: "var(--neon-green)",
+            title: "Estacionamiento Seguro",
+            desc: "Luegos a la zona de talleres al finalizar la guardia. Tienes prisa por subir al bus, así que cuadras la camioneta en una ligera pendiente dejando solo el freno de mano.",
+            optA: "A) Apagar el motor, activar el freno de parqueo e irte rápido porque la pendiente es mínima.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Enganchar el vehículo en cambio, aplicar freno de mano y colocar obligatoriamente los tacos/tunas.",
+            correct: "B", avatar: "🛑",
+            family: "Asegura bien tu herramienta de trabajo. Un error al final del día puede cambiarlo todo."
+        },
+        {
+            icon: "🛡️", tag: "PROTECCIÓN DE VIDA", color: "var(--neon-green)",
+            title: "Uso del Cinturón de Seguridad",
+            desc: "Vas a mover el camión una distancia mínima de 50 metros dentro de la misma plataforma de descarga para reacomodar material. ¿Es necesario el cinturón?",
+            optA: "A) Avanzar despacio sin el cinturón puesto para ahorrar tiempo, ya que es un tramo muy corto.",
+            optB: "B) REGLAMENTO DE TRÁNSITO: Abrocharse el cinturón. Su uso es obligatorio en todo momento y distancia sin excepciones.",
+            correct: "B", avatar: "🛡️",
+            family: "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."
+        },
+        // --- NUEVAS PREGUNTAS HASTA COMPLETAR 30 ---
+        {
+            icon: "↪️", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
+            title: "Señal de Curva Pronunciada",
+            desc: "Te aproximas a una curva en la tarea con una señal de 20 km/h. La vía se encuentra seca, despejada y cuentas con excelente visibilidad.",
+            optA: "A) Mantener 35 km/h para agilizar el ciclo de carguío aprovechando que la vía está en buen estado.",
+            optB: "B) REGLAMENTO: Respetar estrictamente los 20 km/h indicados. Las velocidades de diseño en curvas son fijas por estabilidad.",
+            correct: "B", avatar: "👨‍👩‍👦",
+            family: "Hijo, las curvas en la mina no perdonan el exceso de velocidad. Respeta la señalización."
+        },
+        {
+            icon: "🛑", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
+            title: "Señal de Pare en Intersección",
+            desc: "Luegos a un cruce interno con señal de 'PARE'. Miras a ambos lados y confirmas que no viene ningún equipo por la vía preferencial.",
+            optA: "A) Reducir un poco la velocidad y pasar despacio para no perder la inercia del vehículo.",
+            optB: "B) REGLAMENTO: Realizar un pare total obligatorio (mínimo 3 segundos), verificar línea de vista y luego avanzar.",
+            correct: "B", avatar: "🛑",
+            family: "Un segundo de impaciencia puede cambiar nuestras vidas. Detén el equipo por completo ante el PARE."
+        },
+        {
+            icon: "📉", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
+            title: "Señal de Pendiente Pronunciada",
+            desc: "Inicias el descenso en una rampa con fuerte inclinación que cuenta con la señal de advertencia de pendiente del 10%.",
+            optA: "A) Descender en una marcha alta (cambio largo) y controlar la velocidad pisando continuamente el freno.",
+            optB: "B) REGLAMENTO: Enganchar la unidad en una marcha baja (caja reducida) antes de bajar para que el motor controle la velocidad.",
+            correct: "B", avatar: "❤️",
+            family: "No abuses de los frenos en la bajada, mi amor. Usa el motor para frenar y mantén el control."
+        },
+        {
+            icon: "🚫", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
+            title: "Señal de Prohibido Adelantar",
+            desc: "Encuentras una señal de 'Prohibido Adelantar' en un tramo recto de tierra donde el vehículo de adelante va levantando mucho polvo a 15 km/h.",
+            optA: "A) Adelantar rápidamente asumiendo que la señal es solo para la curva que viene más adelante.",
+            optB: "B) REGLAMENTO: Mantener tu posición detrás del vehículo respetando la prohibición vial hasta salir de la zona.",
+            correct: "B", avatar: "🏠",
+            family: "No te adelantes al peligro por desesperación. La señal está ahí para proteger tu vida."
+        },
+        {
+            icon: "🔧", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
+            title: "Velocidad en Zona de Talleres",
+            desc: "Ingresas al área de talleres mecánicos y parqueos de la tarea. No visualizas letreros de velocidad en la entrada, pero hay personal caminando.",
+            optA: "A) Mantener la velocidad estándar de rutas internas (40 km/h) tocando la bocina intermitentemente.",
+            optB: "B) REGLAMENTO: Reducir la velocidad al límite máximo establecido para talleres y parqueos (10 a 15 km/h).",
+            correct: "B", avatar: "🚶",
+            family: "En los talleres caminan tus compañeros de trabajo. Ve despacio, cuida sus vidas y la tuya."
+        },
+        {
+            icon: "🚧", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
+            title: "Letrero de Trabajos en Vía",
+            desc: "Ves una señal provisional de color naranja que advierte 'Trabajos en la vía a 100 metros' pero no se observa operarios trabajando en el punto.",
+            optA: "A) Mantener el ritmo de marcha normal asumiendo que el personal ya se retiró del lugar.",
+            optB: "B) REGLAMENTO: Reducir la marcha de inmediato y estar preparado para detener la unidad ante cualquier imprevisto.",
+            correct: "B", avatar: "👪",
+            family: "Las señales de obra previenen desgracias. Baja la velocidad, no te confíes del camino."
+        },
+        {
+            icon: "🚚", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
+            title: "Velocidad en Berma de Descarga",
+            desc: "Te aproximas con un camión a la plataforma o berma de descarga de material en la tarea. El terreno se ve nivelado y libre.",
+            optA: "A) Ingresar a la plataforma a 30 km/h para agilizar la maniobra de volteo y el ciclo.",
+            optB: "B) REGLAMENTO: Reducir la velocidad al mínimo reglamentario (máximo 10 km/h) para ingresar a posicionarse.",
+            correct: "B", avatar: "🛡️",
+            family: "La zona de descarga es crítica y el terreno puede ceder. Despacio, asegura cada paso."
+        },
+        {
+            icon: "↕️", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Preferencia en Rampas de la Tarea",
+            desc: "Conduces un vehículo de bajada en una rampa angosta y te encuentras de frente con otra unidad que viene subiendo cargada.",
+            optA: "A) Mantener tu trayectoria obligando a que la unidad de subida reduzca la marcha y se apegue a la berma.",
+            optB: "B) REGLAMENTO: Ceder el paso. Todo vehículo que transita de subida por una rampa tiene la preferencia absoluta.",
+            correct: "B", avatar: "👨‍👩‍👦",
+            family: "Cede el paso al que viene esforzándose en la subida. El reglamento te trae con bien a casa."
+        },
+        {
+            icon: "🚨", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Vehículos de Emergencia",
+            desc: "Escuchas una sirena y ves luces reflejadas en tus espejos. Una ambulancia de la mina se aproxima rápidamente detrás de ti en la ruta.",
+            optA: "A) Acelerar para despejar la ruta rápido y evitar obstruir el paso manteniéndote adelante.",
+            optB: "B) REGLAMENTO: Indicar con luces direccionales, apegarse al lado derecho de la vía y detenerse por completo.",
+            correct: "B", avatar: "❤️",
+            family: "Esa ambulancia va a salvar una vida, dale el paso de inmediato. Alguien espera a ese compañero."
+        },
+        {
+            icon: "🔄", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Rotondas o Óvalos de Distribución",
+            desc: "Vas a ingresar a un óvalo de distribución vial en los accesos. Un vehículo utilitario ya se encuentra circulando por dentro del óvalo.",
+            optA: "A) Ingresar al óvalo ganándole el paso antes de que la otra unidad cruce por tu frente.",
+            optB: "B) REGLAMENTO: Detenerse antes de ingresar. Las unidades que circulan dentro de la rotonda tienen preferencia.",
+            correct: "B", avatar: "🛑",
+            family: "Respeta los turnos en la vía. Entrar a la fuerza al óvalo puede provocar un choque."
+        },
+        {
+            icon: "🚶", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Cruce de Peatones en Vías",
+            desc: "Un grupo de trabajadores de mantenimiento se dispone a cruzar por el sendero peatonal demarcado en la vía interna de la tarea.",
+            optA: "A) Tocar la bocina repetidamente para avisarles que vas pasando y que esperen a que termines de transitar.",
+            optB: "B) REGLAMENTO: Detener el vehículo completamente antes de la línea y otorgar preferencia absoluta al peatón.",
+            correct: "B", avatar: "🚶",
+            family: "El peatón es el eslabón más débil en la mina. Detén tu unidad, cuida a tus compañeros."
+        },
+        {
+            icon: "⛺", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Salida de Campamento o Parqueo",
+            desc: "Estás listo para salir del estacionamiento del campamento principal e incorporarte a la vía rápida de tránsito interno.",
+            optA: "A) Salir de forma continua aprovechando que tienes espacio antes de que se acerque el vehículo de la vía rápida.",
+            optB: "B) REGLAMENTO: Detenerse por completo y ceder el paso. Los vehículos que transitan por la vía principal tienen preferencia.",
+            correct: "B", avatar: "🏠",
+            family: "No salgas apurado del parqueo. Mira bien a ambos lados, un choque al iniciar el turno arruina todo."
+        },
+        {
+            icon: "❌", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
+            title: "Preferencia ante Obstáculo en Vía",
+            desc: "En tu carril hay un montículo de tierra por mantenimiento en la tarea. Viene un vehículo en sentido contrario por su carril limpio.",
+            optA: "A) Avanzar rápido e invadir el carril contrario para pasar el obstáculo antes de que la otra unidad llegue.",
+            optB: "B) REGLAMENTO: Detenerse en tu carril y esperar que el vehículo del sentido contrario pase libremente.",
+            correct: "B", avatar: "👪",
+            family: "El obstáculo está en tu lado, te toca esperar. No invadas carriles ajenos; regresa sano."
+        },
+        {
+            icon: "↩️", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
+            title: "Giro a la Izquierda",
+            desc: "Necesitas girar a la izquierda para ingresar a un frente de carguío en la tarea. Viene un vehículo en sentido contrario a lo lejos.",
+            optA: "A) Acelerar y realizar el giro rápido para ganarle el paso al vehículo antes de que llegue al cruce.",
+            optB: "B) REGLAMENTO: Detenerse por completo, esperar que el vehículo en sentido contrario pase y luego girar seguro.",
+            correct: "B", avatar: "🛡️",
+            family: "No le ganes el paso al carril contrario. Espera a que la vía esté despejada, no arriesgues tu vida."
+        },
+        {
+            icon: "📐", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
+            title: "Distancia con Equipos en Maniobra",
+            desc: "Un cargador frontal realiza limpieza en una rampa de la tarea. Debes pasar por el costado de su zona de operación.",
+            optA: "A) Pasar cerca del equipo aprovechando que el operador se detuvo un instante a levantar el cucharón.",
+            optB: "B) REGLAMENTO: Detenerse a distancia segura (30 metros) y esperar que el operador paralice el equipo y dé el pase.",
+            correct: "B", avatar: "🚜",
+            family: "El cucharón del cargador puede moverse inesperadamente. Mantén tu distancia de seguridad."
+        },
+        {
+            icon: "⚡", tag: "LÍNEA DE FUEGO", color: "var(--neon-red)",
+            title: "Cruce de Vías de Alta Tensión",
+            desc: "Conduces un camión volquete en la tarea y vas a transitar por debajo de una línea de alta tensión aérea señalizada.",
+            optA: "A) Pasar de corrido asumiendo que la tolva bajó por completo porque la luz del tablero ya se apagó.",
+            optB: "B) REGLAMENTO: Confirmar visualmente al 100% que la tolva está totalmente abajo antes de pasar bajo el cableado.",
+            correct: "B", avatar: "❤️",
+            family: "Asegúrate de que todo esté en su lugar antes de avanzar. No ignores los peligros elevados."
+        },
+        {
+            icon: "🔙", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
+            title: "Maniobra de Retroceso",
+            desc: "Vas a retroceder tu camioneta en la zona de operaciones de la tarea para cuadrarte. No cuentas con sensor de retroceso activo.",
+            optA: "A) Retroceder rápido confiando plenamente en la visibilidad de tus tres espejos retrovisores.",
+            optB: "B) REGLAMENTO: Tocar dos veces la bocina, esperar 3 segundos, verificar puntos ciegos y retroceder despacio.",
+            correct: "B", avatar: "🛑",
+            family: "Toca la bocina antes de retroceder, avisa el movimiento. Alguien podría estar oculto detrás."
+        },
+        {
+            icon: "🚛", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
+            title: "Adelantamiento a Escoltas",
+            desc: "Alcanzas en la ruta de la tarea a un convoy de camiones pesados que se desplaza escoltado por una camioneta con bandera.",
+            optA: "A) Adelantar a los camiones uno por uno con cuidado cuando veas un espacio libre.",
+            optB: "B) REGLAMENTO: Mantener la posición. Prohibido adelantar a un convoy escoltado sin autorización radial de la escolta.",
+            correct: "B", avatar: "🏠",
+            family: "El convoy se mueve despacio por seguridad de todos. Mantén tu distancia, te esperamos."
+        },
+        {
+            icon: "💡", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
+            title: "Uso de Luces e Indicadores",
+            desc: "Comienza el turno de día en la tarea y el cielo se encuentra completamente despejado, limpio y soleado.",
+            optA: "A) Apagar las luces principales y circulinas para preservar los componentes eléctricos de la unidad.",
+            optB: "B) REGLAMENTO: Mantener luces altas, luces de posición y circulinas encendidas las 24 horas del día obligatoriamente.",
+            correct: "B", avatar: "🪪",
+            family: "Hacerte visible en la ruta salva vidas. Enciende todas las luces, queremos que regreses sano."
+        },
+        {
+            icon: "📻", tag: "DISTRACTORES", color: "#3b82f6",
+            title: "Uso de la Radio de Comunicación",
+            desc: "Necesitas reportar tu ingreso a una rampa de la tarea, pero la frecuencia radial se encuentra saturada con coordinaciones de otra área.",
+            optA: "A) Presionar el botón PTT e interrumpir rápidamente para registrar tu ingreso antes de entrar a la rampa.",
+            optB: "B) REGLAMENTO: Esperar que la frecuencia quede libre, modular de forma clara, corta y precisa tu mensaje.",
+            correct: "B", avatar: "📻",
+            family: "La radio es para coordinar seguridad, no para saturarla. Escucha primero por tu seguridad."
+        },
+        {
+            icon: "🧼", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
+            title: "Parabrisas Sucio o Empañado",
+            desc: "Al iniciar marcha por la mañana, el parabrisas de tu unidad se encuentra lleno de polvo pegado y empañado por el frío.",
+            optA: "A) Arrancar despacio asumiendo que el viento limpiará el vidrio o que se desempañará con la calefacción en ruta.",
+            optB: "B) REGLAMENTO: Limpiar manualmente el parabrisas y esperar el desempañado completo antes de iniciar movimiento.",
+            correct: "B", avatar: "👨‍👩‍👦",
+            family: "Si no ves la ruta, te expones al peligro. Tómate el tiempo de limpiar los vidrios, te esperamos."
+        },
+        {
+            icon: "🦺", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
+            title: "Uso de EPP al Bajar del Vehículo",
+            desc: "Debes descender de la cabina de tu camión en la tarea solo por un minuto para recoger un documento del suelo.",
+            optA: "A) Bajar rápido sin casco ni lentes de seguridad, ya que solo pisarás el suelo por unos segundos.",
+            optB: "B) REGLAMENTO: Colocarse obligatoriamente casco, lentes, chaleco y zapatos de seguridad antes de abrir la puerta.",
+            correct: "B", avatar: "🦺",
+            family: "Tu equipo de protección es tu escudo en la mina. No bajes del vehículo desprotegido."
+        }
+    ];
+
     let workerData = {};
     let score = 0;
     let lives = 3;
     let errorInLevel = false;
     let audioCtx = null;
+    
+    // VARIABLES PARA LA LÓGICA ALEATORIA
+    let currentQuestions = [];
+    let currentStepIndex = 0; // Va de 0 a 9 para las 10 preguntas seleccionadas
 
     function playSound(type) {
         try {
@@ -366,20 +584,26 @@
         document.getElementById('current-lives').innerText = hearts || "INACTIVA";
     }
 
-    function setProgressBar(step) {
-        const percentage = (step - 1) * 10;
+    function setProgressBar(stepIndex) {
+        const percentage = stepIndex * 10;
         document.getElementById('p-bar').style.width = percentage + "%";
     }
 
-    function showScreen(id, step = 1) {
+    function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        
         if (id === 'screen-register' || id === 'screen-end' || id === 'screen-gameover') {
             document.getElementById('stats-viewer').style.display = 'none';
         } else {
             document.getElementById('stats-viewer').style.display = 'block';
-            setProgressBar(step);
         }
+    }
+
+    // FUNCIÓN DE SELECCIÓN ALEATORIA DE PREGUNTAS
+    function getRandomQuestions(bank, count) {
+        let shuffled = [...bank].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
     }
 
     function startGame() {
@@ -392,38 +616,80 @@
         }
         workerData = { name, dni, area };
         score = 0; lives = 3; errorInLevel = false;
+        currentStepIndex = 0;
+        
+        // Seleccionamos 10 preguntas aleatorias del banco de 30
+        currentQuestions = getRandomQuestions(questionBank, 10);
+        
         document.getElementById('current-score').innerText = score;
         updateLivesDisplay();
-        showScreen('screen-lvl1', 1);
+        
+        loadQuestion(currentStepIndex);
+        showScreen('screen-question');
     }
 
-    function triggerFamilyPopup(lvl) {
-        playSound('error');
-        document.getElementById('popup-' + lvl).style.display = 'block';
-        if (!errorInLevel) {
-            lives--;
-            updateLivesDisplay();
-            errorInLevel = true;
-        }
-        if (lives <= 0) {
-            document.getElementById('gameover-name').innerText = workerData.name || "Operador";
-            setTimeout(() => { showScreen('screen-gameover'); }, 1800); 
-        }
-    }
-
-    function nextLevel(lvl, points) {
-        playSound('success');
-        if (!errorInLevel) {
-            score += points;
-            document.getElementById('current-score').innerText = score;
-        }
+    function loadQuestion(index) {
         errorInLevel = false;
-        if(lvl <= 10) {
-            showScreen('screen-lvl' + lvl, lvl);
+        document.getElementById('family-popup').style.display = 'none';
+        setProgressBar(index + 1);
+        
+        const q = currentQuestions[index];
+        
+        // Renderizar elementos en el HTML
+        document.getElementById('lvl-icon').innerText = q.icon;
+        document.getElementById('lvl-tag').innerText = q.tag;
+        document.getElementById('lvl-graphic-box').style.borderLeft = `5px solid ${q.color}`;
+        document.getElementById('lvl-title').innerText = `Nivel ${index + 1}: ${q.title}`;
+        document.getElementById('lvl-desc').innerText = q.desc;
+        
+        const btnA = document.getElementById('btn-opt-a');
+        const btnB = document.getElementById('btn-opt-b');
+        
+        btnA.innerText = q.optA;
+        btnB.innerText = q.optB;
+        
+        // Reconfigurar los eventos onClick limpios
+        btnA.onclick = () => evaluateAnswer('A', q.correct);
+        btnB.onclick = () => evaluateAnswer('B', q.correct);
+    }
+
+    function evaluateAnswer(selected, correct) {
+        if (selected !== correct) {
+            // Respuesta incorrecta -> Muestra alerta familiar
+            playSound('error');
+            const q = currentQuestions[currentStepIndex];
+            document.getElementById('popup-avatar').innerText = q.avatar;
+            document.getElementById('popup-text').innerText = q.family;
+            document.getElementById('family-popup').style.display = 'block';
+            
+            if (!errorInLevel) {
+                lives--;
+                updateLivesDisplay();
+                errorInLevel = true;
+            }
+            
+            if (lives <= 0) {
+                document.getElementById('gameover-name').innerText = workerData.name || "Colaborador";
+                setTimeout(() => { showScreen('screen-gameover'); }, 2500); 
+            }
         } else {
-            document.getElementById('congrats-text').innerHTML = `Operador: <strong>${workerData.name}</strong><br>Área/Tarea: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
-            document.getElementById('final-score').innerText = score;
-            showScreen('screen-end');
+            // Respuesta correcta -> Avanza de nivel
+            playSound('success');
+            if (!errorInLevel) {
+                score += 10;
+                document.getElementById('current-score').innerText = score;
+            }
+            
+            currentStepIndex++;
+            
+            if (currentStepIndex < 10) {
+                loadQuestion(currentStepIndex);
+            } else {
+                // Completó las 10 preguntas con éxito
+                document.getElementById('congrats-text').innerHTML = `Colaborador: <strong>${workerData.name}</strong><br>Área/Tarea: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
+                document.getElementById('final-score').innerText = score;
+                showScreen('screen-end');
+            }
         }
     }
 
@@ -431,7 +697,7 @@
         document.getElementById('worker-name').value = '';
         document.getElementById('worker-dni').value = '';
         document.getElementById('worker-area').value = '';
-        document.querySelectorAll('.family-alert').forEach(p => p.style.display = 'none');
+        document.getElementById('family-popup').style.display = 'none';
         showScreen('screen-register');
     }
 </script>
