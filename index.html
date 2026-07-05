@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rogasac - Misión Seguridad Móvil</title>
+    <style>
+        :root {
+            --primary-gold: #f59e0b;
+            --safety-blue: #1d4ed8;
+            --panel-bg: #1e293b;
+            --terminal-dark: #0f172a;
+            --neon-green: #10b981;
+            --neon-red: #ef4444;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--terminal-dark);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #game-container {
+            width: 100%;
+            max-width: 480px;
+            background: linear-gradient(180deg, var(--panel-bg) 0%, #111827 100%);
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            padding: 20px;
+            box-sizing: border-box;
+            border: 3px solid #334155;
+            position: relative;
+        }
+        .corporate-header {
+            background: white;
+            padding: 10px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .corporate-header img {
+            max-height: 55px;
+            width: auto;
+            object-fit: contain;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #090d16;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid #1e293b;
+            margin-bottom: 15px;
+        }
+        .progress-container {
+            background: #334155;
+            border-radius: 10px;
+            height: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, var(--safety-blue), var(--neon-green));
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .game-img-box {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 2px solid #475569;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            background-color: #111827;
+            position: relative;
+        }
+        .game-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Alerta visual para niveles interactivos */
+        .level-graphic {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .level-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        .screen { display: none; }
+        .active { display: block; }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 12px;
+            border: 2px solid #475569;
+            background-color: #0f172a;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--neon-green); outline: none; box-shadow: 0 0 10px rgba(16,185,129,0.3); }
+
+        button {
+            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 0 #1e40af;
+            transition: 0.1s;
+            text-transform: uppercase;
+        }
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #1e40af;
+        }
+        .option-btn {
+            background: #334155;
+            color: #f1f5f9;
+            text-align: left;
+            box-shadow: 0 4px 0 #1e293b;
+            border: 1px solid #475569;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .option-btn:hover { background: #475569; border-color: var(--primary-gold); }
+
+        .family-alert {
+            background: linear-gradient(145deg, #7f1d1d, #991b1b);
+            border: 3px solid var(--primary-gold);
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .family-avatar-text {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            float: left;
+            margin-right: 15px;
+            border: 2px solid white;
+        }
+        .clear { clear: both; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <!-- CABECERA: Llama a tu archivo local de forma exacta -->
+    <div class="corporate-header">
+        <img src="LOGO.jpg" alt="Inversiones Rogasac" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+        <div id="alt-logo" style="display:none; font-weight:bold; color:#1e40af; font-size:18px;">INVERSIONES ROGASAC</div>
+    </div>
+
+    <div id="stats-viewer" style="display:none;">
+        <div class="stats-bar">
+            <span>PUNTOS: <span id="current-score" style="color:var(--neon-green);">0</span></span>
+            <span>VIDAS: <span id="current-lives" style="color:var(--neon-red);">❤️❤️❤️</span></span>
+        </div>
+        <div class="progress-container">
+            <div id="p-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- MENÚ PRINCIPAL CON TU IMAGEN REAL DE LA MINA -->
+    <div id="screen-register" class="screen active">
+        <h2 style="color: var(--primary-gold); font-size: 21px; margin: 5px 0 12px 0; text-transform: uppercase; text-align: center;">Desafío Lagunas Norte</h2>
+        
+        <!-- PANTALLA DE INICIO: Llama de forma exacta al archivo de la mina -->
+        <div class="game-img-box">
+            <img src="WhatsApp Image 2026-07-05 at 16.03.56.jpeg" alt="Mina Lagunas Norte" onerror="this.src=''; this.parentElement.innerHTML='<div class=\'level-graphic\'><div class=\'level-icon\'>⛰️</div><b style=\'color:var(--primary-gold)\'>LAGUNAS NORTE OPERACIONES</b></div>';">
+        </div>
+        
+        <p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px; text-align: center;">Campaña de Seguridad: <strong>"Yo escucho a la prevención"</strong></p>
+        
+        <input type="text" id="worker-name" placeholder="Nombres y Apellidos del Operador" required>
+        <input type="text" id="worker-dni" placeholder="Número de DNI" required>
+        <input type="text" id="worker-area" placeholder="Escribe tu Frente de Trabajo o Área" required>
+        
+        <button onclick="startGame()" style="background: linear-gradient(180deg, #f59e0b, #d97706); color: #000; box-shadow: 0 4px 0 #b45309;">INICIAR TURNO SEGURO 🕹️</button>
+    </div>
+
+    <!-- PREGUNTA 1 -->
+    <div id="screen-lvl1" class="screen">
+        <div class="game-img-box">
+            <div class="level-graphic" style="border-left: 5px solid var(--primary-gold);">
+                <div class="level-icon">🚜</div>
+                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Frente de Carguío e IPERC</span>
+            </div>
+        </div>
+        <h3 style="color:var(--primary-gold);">Nivel 1: Inspección de Pre-uso</h3>
+        <p style="font-size: 14px; text-align: left;">Hay retraso en la terraza de movimiento de tierras. El supervisor te pide arrancar el equipo sin hacer el Checklist.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl1')">A) Operar de inmediato para acelerar el ciclo y avanzar el carguío.</button>
+        <button class="option-btn" onclick="nextLevel(2, 25)">B) PARE, PIENSE, ACTÚE: Realizar la inspección y firmar el IPERC obligatorio.</button>
+        
+        <div id="popup-lvl1" class="family-alert">
+            <div class="family-avatar-text">👨‍👩‍👦</div>
+            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"Papá, un camión apurado no vale tu vida. Llena tu Checklist, te esperamos enteros en casa."</p>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- PREGUNTA 2 -->
+    <div id="screen-lvl2" class="screen">
+        <div class="game-img-box">
+            <div class="level-graphic" style="border-left: 5px solid #a855f7;">
+                <div class="level-icon">🌫️</div>
+                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Alerta Climática Extrema</span>
+            </div>
+        </div>
+        <h3 style="color:var(--primary-gold);">Nivel 2: Condición Climática</h3>
+        <p style="font-size: 14px; text-align: left;">Una densa neblina invade las rampas de la mina. La visibilidad es menor a la distancia segura de frenado.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl2')">A) Encender neblineros y continuar la marcha guiándote de las luces del camión líder.</button>
+        <button class="option-btn" onclick="nextLevel(3, 25)">B) DERECHO A DECIR NO: Estacionar el equipo en zona segura y reportar por radio.</button>
+        
+        <div id="popup-lvl2" class="family-alert">
+            <div class="family-avatar-text">❤️</div>
+            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"No manejes a ciegas en la mina. Detente por favor, tus hijos quieren abrazarte mañana."</p>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- PREGUNTA 3 -->
+    <div id="screen-lvl3" class="screen">
+        <div class="game-img-box">
+            <div class="level-graphic" style="border-left: 5px solid var(--neon-red);">
+                <div class="level-icon">⚠️</div>
+                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Zonas Ciegas - Puntos Críticos</span>
+            </div>
+        </div>
+        <h3 style="color:var(--primary-gold);">Nivel 3: Línea de Fuego</h3>
+        <p style="font-size: 14px; text-align: left;">Vas a pie a coordinar con un operador de excavadora y sabes que pasarás por el punto ciego de sus espejos.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl3')">A) Cruzar corriendo por detrás confiando en que el operador está atento.</button>
+        <button class="option-btn" onclick="nextLevel(4, 25)">B) Quedarse fuera de la línea de fuego y buscar contacto radial o visual positivo.</button>
+        
+        <div id="popup-lvl3" class="family-alert">
+            <div class="family-avatar-text">🏠</div>
+            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"¡Ten cuidado! Las máquinas pesadas son gigantes, haz que te vean. No te expongas."</p>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- PREGUNTA 4 -->
+    <div id="screen-lvl4" class="screen">
+        <div class="game-img-box">
+            <div class="level-graphic" style="border-left: 5px solid #3b82f6;">
+                <div class="level-icon">🥱</div>
+                <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; font-weight:bold;">Guardia Nocturna - Monitoreo</span>
+            </div>
+        </div>
+        <h3 style="color:var(--primary-gold);">Nivel 4: Fatiga y Somnolencia</h3>
+        <p style="font-size: 14px; text-align: left;">Es el cambio de guardia de amanecida y sientes pesadez en los párpados y cabeceos constantes en ruta.</p>
+        <button class="option-btn" onclick="triggerFamilyPopup('lvl4')">A) Abrir las ventanas para ventilar el frío, tomar café y aguantar hasta el final.</button>
+        <button class="option-btn" onclick="nextLevel(5, 25)">B) Alerta de Fatiga: Estacionar el camión en lugar seguro de inmediato y avisar por radio.</button>
+        
+        <div id="popup-lvl4" class="family-alert">
+            <div class="family-avatar-text">👪</div>
+            <p style="font-size: 13px; text-align: left; margin:0; color:#fef08a;"><strong>Tu Familia te dice:</strong><br>"El sueño le gana al más fuerte. No arriesgues tu vida por un viaje más. ¡Para el equipo!"</p>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- FIN DEL JUEGO -->
+    <div id="screen-end" class="screen">
+        <h2 style="color: var(--neon-green); text-align: center;">🏆 ¡GUARDIA PERFECTA!</h2>
+        <p id="congrats-text" style="font-size:14px; line-height: 1.5; text-align: center;"></p>
+        <p style="font-size:14px; text-align: center;">Lograste operar con Cero Accidentes protegiendo tu vida y la de tus compañeros.</p>
+        
+        <div style="background: #090d16; padding: 20px; border-radius: 16px; border: 2px solid var(--neon-green); margin: 20px 0;">
+            <p style="margin:0; font-size: 24px; color: var(--neon-green); font-weight: bold; text-align: center;">PUNTAJE: <span id="final-score">0</span> / 100 PTS</p>
+            <p style="font-size: 11px; color: #64748b; margin-top:5px; text-transform: uppercase; text-align: center;">Tu registro está activo para la premiación oficial.</p>
+        </div>
+        <button onclick="restartGame()" style="background: linear-gradient(180deg, var(--neon-green), #059669); color: black; box-shadow: 0 4px 0 #047857;">CERRAR TURNO 🔄</button>
+    </div>
+</div>
+
+<script>
+    let workerData = {};
+    let score = 0;
+    let lives = 3;
+    let errorInLevel = false;
+
+    // Generador automático de sonidos Arcade (Web Audio API nativa sin internet)
+    let audioCtx = null;
+    function playSound(type) {
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if (type === 'success') {
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nota Re5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // Nota La5
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'error') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            }
+        } catch(e) { console.log("Audio no soportado o bloqueado."); }
+    }
+
+    function updateLivesDisplay() {
+        let hearts = "";
+        for(let i=0; i<lives; i++) hearts += "❤️";
+        document.getElementById('current-lives').innerText = hearts || "GAME OVER";
+    }
+
+    function setProgressBar(step) {
+        const percentage = (step - 1) * 25;
+        document.getElementById('p-bar').style.width = percentage + "%";
+    }
+
+    function showScreen(id, step = 1) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if (id === 'screen-register' || id === 'screen-end') {
+            document.getElementById('stats-viewer').style.display = 'none';
+        } else {
+            document.getElementById('stats-viewer').style.display = 'block';
+            setProgressBar(step);
+        }
+    }
+
+    function startGame() {
+        const name = document.getElementById('worker-name').value;
+        const dni = document.getElementById('worker-dni').value;
+        const area = document.getElementById('worker-area').value;
+
+        if(!name || !dni || !area) {
+            alert("SISTEMA ROGASAC: Completa tus datos para iniciar el registro.");
+            return;
+        }
+        workerData = { name, dni, area };
+        score = 0;
+        lives = 3;
+        errorInLevel = false;
+        document.getElementById('current-score').innerText = score;
+        updateLivesDisplay();
+        showScreen('screen-lvl1', 1);
+    }
+
+    function triggerFamilyPopup(lvl) {
+        playSound('error');
+        document.getElementById('popup-' + lvl).style.display = 'block';
+        if (!errorInLevel) {
+            lives--;
+            updateLivesDisplay();
+            errorInLevel = true;
+        }
+        if (lives <= 0) {
+            alert("🚨 SEGURIDAD ROGASAC: Has acumulado incidentes de alto riesgo críticos. Turno suspendido. Hazle caso a tu familia y vuelve a iniciar.");
+            restartGame();
+        }
+    }
+
+    function nextLevel(lvl, points) {
+        playSound('success');
+        if (!errorInLevel) {
+            score += points;
+            document.getElementById('current-score').innerText = score;
+        }
+        errorInLevel = false;
+
+        if(lvl === 2) showScreen('screen-lvl2', 2);
+        if(lvl === 3) showScreen('screen-lvl3', 3);
+        if(lvl === 4) showScreen('screen-lvl4', 4);
+        if(lvl === 5) {
+            document.getElementById('congrats-text').innerHTML = `Operador: <strong>${workerData.name}</strong><br>Frente: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
+            document.getElementById('final-score').innerText = score;
+            showScreen('screen-end');
+        }
+    }
+
+    function restartGame() {
+        document.getElementById('worker-name').value = '';
+        document.getElementById('worker-dni').value = '';
+        document.getElementById('worker-area').value = '';
+        document.querySelectorAll('.family-alert').forEach(p => p.style.display = 'none');
+        showScreen('screen-register');
+    }
+</script>
+</body>
+</html>
