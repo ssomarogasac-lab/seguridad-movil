@@ -105,14 +105,14 @@
         
         input, select {
             width: 100%;
-            padding: 15px;
-            margin: 8px 0;
+            padding: 14px;
+            margin: 6px 0 12px 0;
             border-radius: 12px;
             border: 2px solid #475569;
             background-color: #0f172a;
             color: #fff;
             box-sizing: border-box;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         button {
@@ -120,7 +120,7 @@
             color: white;
             border: none;
             padding: 15px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: bold;
             border-radius: 12px;
             cursor: pointer;
@@ -168,20 +168,23 @@
         }
         .clear { clear: both; }
 
-        .cancel-title { color: #ef4444; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 5px; }
-        .cancel-subtitle { text-align: center; font-size: 16px; margin-bottom: 20px; }
+        .cancel-title { color: #ef4444; font-size: 19px; font-weight: bold; text-align: center; margin-bottom: 5px; }
+        .cancel-subtitle { text-align: center; font-size: 15px; margin-bottom: 20px; }
         .cancel-body { text-align: center; font-size: 14px; color: #cbd5e1; line-height: 1.5; margin-bottom: 25px; }
         .cancel-icon-container { display: flex; justify-content: center; margin-bottom: 25px; font-size: 70px; }
-        .cancel-warning { text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-        .cancel-subwarning { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 30px; }
-        .btn-white { background: #f8fafc !important; color: #0f172a !important; box-shadow: 0 4px 0 #cbd5e1 !important; }
+        .cancel-warning { text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; color: var(--neon-red); }
         .btn-submit { background: linear-gradient(180deg, #10b981, #059669) !important; color: white !important; box-shadow: 0 4px 0 #047857 !important; margin-bottom: 10px; }
         
         /* Estilos de la Encuesta */
-        .survey-label { font-size: 14px; font-weight: bold; color: var(--primary-gold); margin-top: 15px; display: block; }
-        .star-rating { display: flex; justify-content: space-between; margin: 10px 0; }
+        .survey-label { font-size: 13.5px; font-weight: bold; color: var(--primary-gold); display: block; margin-top: 10px; }
+        .star-rating { display: flex; justify-content: space-between; margin: 8px 0; }
         .star-btn { background: #334155; border: 1px solid #475569; color: white; width: 18%; padding: 10px; text-align: center; border-radius: 8px; box-shadow: none; font-size: 14px; }
         .star-btn.selected { background: var(--primary-gold); color: #000; font-weight: bold; border-color: white; }
+        .scrollable-survey { max-height: 420px; overflow-y: auto; padding-right: 5px; margin-bottom: 15px; }
+        
+        .scrollable-survey::-webkit-scrollbar { width: 6px; }
+        .scrollable-survey::-webkit-scrollbar-track { background: #0f172a; border-radius: 10px; }
+        .scrollable-survey::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -240,9 +243,9 @@
         <div class="cancel-subtitle">Atención, compañero/a <span id="gameover-name" style="color: var(--primary-gold); font-weight: bold;"></span>.</div>
         <div class="cancel-body">Has acumulado alertas críticas de seguridad en esta simulación y tu turno se ha detenido para priorizar tu vida.</div>
         <div class="cancel-icon-container">🚫</div>
-        <div class="cancel-warning">🚨 YA NO PUEDES CONDUCIR NI OPERAR EN LA UNIDAD MINERA.</div>
+        <div class="cancel-warning">🚨 TU TURNO FUE DETENIDO PREVENTIVAMENTE.</div>
         
-        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA DE CAMPAÑA ➡️</button>
+        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA OBLIGATORIA ➡️</button>
     </div>
 
     <!-- FIN DEL JUEGO (ÉXITO) -->
@@ -253,69 +256,108 @@
             <p style="margin:0; font-size: 24px; color: var(--neon-green); font-weight: bold; text-align: center;">PUNTAJE: <span id="final-score">0</span> / 100 PTS</p>
         </div>
         
-        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA DE CAMPAÑA ➡️</button>
+        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA OBLIGATORIA ➡️</button>
     </div>
 
-    <!-- PANTALLA NUEVA: ENCUESTA DE MEDICIÓN DE LA CAMPAÑA -->
+    <!-- PANTALLA: ENCUESTA DE MEDICIÓN DE LA CAMPAÑA (6 PREGUNTAS) -->
     <div id="screen-survey" class="screen">
-        <h2 style="color: var(--primary-gold); text-align: center; margin-top: 0;">📊 EVALUACIÓN DE LA CAMPAÑA</h2>
-        <p style="font-size: 13px; color: #94a3b8; text-align: center; margin-bottom: 20px;">Ayúdanos a medir el impacto de la campaña "Yo escucho a la prevención".</p>
+        <h2 style="color: var(--primary-gold); text-align: center; margin-top: 0; font-size: 20px;">📊 EVALUACIÓN DE LA CAMPAÑA</h2>
+        <p style="font-size: 12.5px; color: #94a3b8; text-align: center; margin-bottom: 15px;">Ayúdanos a medir el impacto real de la campaña de seguridad.</p>
         
-        <!-- P1: Escala -->
-        <label class="survey-label">1. ¿El juego te ayudó a recordar los riesgos críticos de tu ruta o frente?</label>
-        <div class="star-rating">
-            <button type="button" class="star-btn" onclick="selectRating(1)">1</button>
-            <button type="button" class="star-btn" onclick="selectRating(2)">2</button>
-            <button type="button" class="star-btn" onclick="selectRating(3)">3</button>
-            <button type="button" class="star-btn" onclick="selectRating(4)">4</button>
-            <button type="button" class="star-btn" onclick="selectRating(5)">5</button>
+        <div class="scrollable-survey">
+            <!-- P1: Escala -->
+            <label class="survey-label">1. ¿El juego te ayudó a recordar los riesgos críticos de tu ruta o frente?</label>
+            <div class="star-rating">
+                <button type="button" class="star-btn" onclick="selectRating(1)">1</button>
+                <button type="button" class="star-btn" onclick="selectRating(2)">2</button>
+                <button type="button" class="star-btn" onclick="selectRating(3)">3</button>
+                <button type="button" class="star-btn" onclick="selectRating(4)">4</button>
+                <button type="button" class="star-btn" onclick="selectRating(5)">5</button>
+            </div>
+            <p style="display:flex; justify-content:space-between; font-size:11px; color:#64748b; margin-top:-5px; margin-bottom:15px; padding:0 5px;"><span>Muy poco</span><span>¡Excelente ayuda!</span></p>
+
+            <!-- P2: Desplegable -->
+            <label class="survey-label">2. ¿Qué te pareció este formato interactivo frente a las charlas comunes?</label>
+            <select id="survey-p2">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="EXCELENTE">Excelente, mucho más dinámico e interesante</option>
+                <option value="BUENO">Bueno, ayuda a entender mejor</option>
+                <option value="REGULAR">Regular, igual que una charla tradicional</option>
+            </select>
+
+            <!-- P3: Desplegable -->
+            <label class="survey-label">3. ¿Los mensajes de alerta de tu familia te hicieron reflexionar?</label>
+            <select id="survey-p3">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="EXCELENTE">Sí, me hicieron pensar directamente en mi hogar</option>
+                <option value="BUENO">Sí, son un buen recordatorio</option>
+                <option value="REGULAR">No causaron mucho impacto</option>
+            </select>
+
+            <!-- P4: Desplegable (Módulo preventivo e IPERC) -->
+            <label class="survey-label">4. ¿Consideras que esta campaña te ayuda a evaluar tus riesgos antes de iniciar cualquier actividad?</label>
+            <select id="survey-p4">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="EXCELENTE">Sí, me motiva fuertemente a estar alerta antes de operar</option>
+                <option value="BUENO">Sí, ayuda a recordar la importancia de prevenir</option>
+                <option value="REGULAR">A veces, depende de la prisa del turno</option>
+            </select>
+
+            <!-- P5: Desplegable -->
+            <label class="survey-label">5. ¿Consideras que lo aprendido hoy evitará un accidente real en tu guardia?</label>
+            <select id="survey-p5">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="Option 1">Sí, es totalmente aplicable al campo</option>
+                <option value="Option 2">Tal vez en algunas situaciones de riesgo</option>
+                <option value="Option 3">No lo creo necesario</option>
+            </select>
+
+            <!-- P6: Desplegable -->
+            <label class="survey-label">6. ¿Te gustaría que se sigan implementando estos desafíos en las próximas campañas?</label>
+            <select id="survey-p6">
+                <option value="">-- Selecciona una opción --</option>
+                <option value="Option 1">Sí, es una excelente iniciativa interactiva</option>
+                <option value="Option 2">Me da igual el formato</option>
+                <option value="Option 3">No, prefiero los métodos tradicionales impresos</option>
+            </select>
         </div>
-        <p style="display:flex; justify-content:space-between; font-size:11px; color:#64748b; margin-top:-5px; padding:0 5px;"><span>Muy poco</span><span>¡Excelente ayuda!</span></p>
 
-        <!-- P2: Lista Desplegable -->
-        <label class="survey-label" style="margin-top:20px;">2. ¿Qué te pareció este formato interactivo frente a las charlas comunes?</label>
-        <select id="survey-p2">
-            <option value="">-- Selecciona una opción --</option>
-            <option value="Mucho más dinámico e interesante">Mucho más dinámico e interesante</option>
-            <option value="Igual que una charla tradicional">Igual que una charla tradicional</option>
-            <option value="Prefiero folletos impresos">Prefiero folletos impresos</option>
-        </select>
-
-        <!-- P3: Botones Radiales Dinámicos -->
-        <label class="survey-label" style="margin-top:20px;">3. ¿Los mensajes de alerta de tu familia te hicieron reflexionar?</label>
-        <select id="survey-p3">
-            <option value="">-- Selecciona una opción --</option>
-            <option value="Sí, me hicieron pensar en mi hogar">Sí, me hicieron pensar en mi hogar</option>
-            <option value="No, los consideré irrelevantes">No, los consideré irrelevantes</option>
-        </select>
-
-        <button class="btn-submit" id="btn-final-send" onclick="sendAllDataToGoogle()" style="margin-top: 30px;">📤 ENVIAR TODO Y TERMINAR GUARDIA</button>
+        <button class="btn-submit" id="btn-final-send" onclick="sendAllDataToGoogle()">📤 ENVIAR EVALUACIÓN Y FINALIZAR</button>
     </div>
 
-    <!-- PANTALLA FINAL DE AGRADECIMIENTO -->
+    <!-- PANTALLA FINAL DE AGRADECIMIENTO CON OPCIÓN VOLVER A JUGAR -->
     <div id="screen-thanks" class="screen" style="text-align: center;">
-        <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
-        <h2 style="color: var(--neon-green);">¡REPORTE Y ENCUESTA ENVIADOS!</h2>
-        <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6;">Tu participación ha sido registrada de forma exitosa en el sistema central de la campaña.</p>
-        <p style="font-size: 14px; color: var(--primary-gold); font-weight: bold; margin-top: 30px;">¡Gracias por tu compromiso con la seguridad! Regresa a casa a salvo.</p>
-        <button onclick="restartGame()" style="background: linear-gradient(180deg, #64748b, #475569); color: white; box-shadow: 0 4px 0 #334155; margin-top:40px;">INICIAR OTRO TURNO 🔄</button>
+        <div style="font-size: 55px; margin-bottom: 15px;">✅</div>
+        <h2 style="color: var(--neon-green); font-size:22px; margin-top:0;">¡REPORTE COMPLETADO!</h2>
+        <p style="font-size: 14px; color: #cbd5e1; line-height: 1.5;">Tus datos de guardia y respuestas de la encuesta han sido consolidados de forma exitosa.</p>
+        <p style="font-size: 13.5px; color: var(--primary-gold); font-weight: bold; margin-top: 20px;">¡Gracias por tu compromiso, compañero/a!</p>
+        
+        <hr style="border: 0; border-top: 1px solid #334155; margin: 25px 0;">
+        
+        <p style="font-size: 12.5px; color: #94a3b8;">¿Perdiste vidas o quieres superar tu puntaje anterior?</p>
+        <button onclick="restartGame()" style="background: linear-gradient(180deg, #f59e0b, #d97706); color: black; box-shadow: 0 4px 0 #b45309; font-weight: bold;">🔄 VOLVER A JUGAR EL VIDEOJUEGO</button>
     </div>
 </div>
 
 <script>
     // =========================================================
-    //  ⚙️ CONFIGURACIÓN TOTALMENTE VINCULADA A TU GOOGLE FORM ⚙️
+    //  ⚙️ CONFIGURACIÓN MAPEADA AL 100% CON TU NUEVO GOOGLE FORM ⚙️
     // =========================================================
     const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc7hl2RY-znapIiJnFHafVu2_6ba8yb_ZaHZfVJVKXtbDwVdQ/formResponse"; 
-    const ENTRY_ID_NOMBRE  = "entry.1977474946"; 
-    const ENTRY_ID_AREA    = "entry.6768063"; 
-    const ENTRY_ID_DNI     = "entry.856581913"; 
-    const ENTRY_ID_PUNTAJE = "entry.1965062714"; 
+    
+    // Datos del Trabajador
+    const ENTRY_ID_NOMBRE  = "entry.1570325139"; 
+    const ENTRY_ID_DNI     = "entry.1957350606";
+    const ENTRY_ID_AREA    = "entry.294937911"; 
+    const ENTRY_ID_PUNTAJE = "entry.1086118807"; 
 
-    // ⚠️ DEBES REEMPLAZAR ESTOS CUATRO ESPACIOS CUANDO ME PASES EL LINK PRELLENADO:
-    const ENTRY_ID_P1      = "entry.REEMPLAZAR_CON_ID_P1"; 
-    const ENTRY_ID_P2      = "entry.REEMPLAZAR_CON_ID_P2"; 
-    const ENTRY_ID_P3      = "entry.REEMPLAZAR_CON_ID_P3"; 
+    // Las 6 Preguntas de la Encuesta
+    const ENTRY_ID_P1      = "entry.1977474946"; // Escala (1-5)
+    const ENTRY_ID_P2      = "entry.6768063";    // Desplegable 2
+    const ENTRY_ID_P3      = "entry.856581913";    // Desplegable 3
+    const ENTRY_ID_P4      = "entry.1965062714";   // Desplegable 4
+    const ENTRY_ID_P5      = "entry.2060797046";   // Desplegable 5
+    const ENTRY_ID_P6      = "entry.1235927801";   // Desplegable 6
     // =========================================================
 
     const questionBank = [
@@ -385,7 +427,7 @@
         {
             icon: "🥱", tag: "ALERTA DE FATIGA", color: "#3b82f6",
             title: "Cambio de Guardia Nocturna",
-            desc: "Es la última hora de la guardia de amanecida sientes pesadez extrema en los párpados, experimentando cabeceos constantes en ruta.",
+            desc: "Es la última hora de la guardia de amanecida, sientes pesadez extrema en los párpados y experimentas cabeceos constantes en ruta.",
             optA: "A) Abrir las ventanas para que entre el aire frío, subir el volumen de la radio y aguantar la última vuelta.",
             optB: "B) Estacionar de inmediato en el lugar seguro más cercano, reportar a tu supervisor y solicitar descanso preventivo.",
             correct: "B", avatar: "👪",
@@ -480,8 +522,12 @@
         selectedRatingP1 = 0;
         
         document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('selected'));
-        if(document.getElementById('survey-p2')) document.getElementById('survey-p2').value = '';
-        if(document.getElementById('survey-p3')) document.getElementById('survey-p3').value = '';
+        for(let i=2; i<=6; i++) {
+            if(document.getElementById('survey-p'+i)) document.getElementById('survey-p'+i).value = '';
+        }
+        
+        document.getElementById('btn-final-send').innerText = "📤 ENVIAR EVALUACIÓN Y FINALIZAR";
+        document.getElementById('btn-final-send').disabled = false;
 
         currentQuestions = getRandomQuestions(questionBank, 10);
         document.getElementById('current-score').innerText = score;
@@ -563,13 +609,16 @@
     function sendAllDataToGoogle() {
         const p2 = document.getElementById('survey-p2').value;
         const p3 = document.getElementById('survey-p3').value;
+        const p4 = document.getElementById('survey-p4').value;
+        const p5 = document.getElementById('survey-p5').value;
+        const p6 = document.getElementById('survey-p6').value;
 
-        if(selectedRatingP1 === 0 || !p2 || !p3) {
-            alert("Por favor, responde las 3 preguntas de la encuesta para cerrar oficialmente tu reporte de guardia.");
+        if(selectedRatingP1 === 0 || !p2 || !p3 || !p4 || !p5 || !p6) {
+            alert("SISTEMA ROGASAC: Por favor, responde las 6 preguntas de la encuesta para registrar formalmente tu participación.");
             return;
         }
 
-        document.getElementById('btn-final-send').innerText = "PROCESANDO REPORTE GENERAL...";
+        document.getElementById('btn-final-send').innerText = "PROCESANDO ENVÍO CENTRALIZADO...";
         document.getElementById('btn-final-send').disabled = true;
 
         const iframe = document.createElement('iframe');
@@ -579,7 +628,7 @@
         const form = document.createElement('form');
         form.action = GOOGLE_FORM_URL;
         form.method = 'POST';
-        form.target = iframe.name = 'invisible_frame_survey';
+        form.target = iframe.name = 'invisible_frame_survey_v5';
 
         const fields = {
             [ENTRY_ID_NOMBRE]: workerData.name,
@@ -588,7 +637,10 @@
             [ENTRY_ID_PUNTAJE]: score,
             [ENTRY_ID_P1]: selectedRatingP1,
             [ENTRY_ID_P2]: p2,
-            [ENTRY_ID_P3]: p3
+            [ENTRY_ID_P3]: p3,
+            [ENTRY_ID_P4]: p4,
+            [ENTRY_ID_P5]: p5,
+            [ENTRY_ID_P6]: p6
         };
 
         for (let key in fields) {
@@ -610,10 +662,21 @@
     }
 
     function restartGame() {
-        document.getElementById('worker-name').value = '';
-        document.getElementById('worker-dni').value = '';
-        document.getElementById('worker-area').value = '';
-        showScreen('screen-register');
+        score = 0; lives = 3; errorInLevel = false;
+        currentStepIndex = 0;
+        selectedRatingP1 = 0;
+        
+        document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('selected'));
+        for(let i=2; i<=6; i++) {
+            if(document.getElementById('survey-p'+i)) document.getElementById('survey-p'+i).value = '';
+        }
+        
+        currentQuestions = getRandomQuestions(questionBank, 10);
+        document.getElementById('current-score').innerText = score;
+        updateLivesDisplay();
+
+        loadQuestion(currentStepIndex);
+        showScreen('screen-question');
     }
 </script>
 </body>
