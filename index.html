@@ -179,6 +179,7 @@
         .cancel-warning { text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
         .cancel-subwarning { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 30px; }
         .btn-white { background: #f8fafc !important; color: #0f172a !important; box-shadow: 0 4px 0 #cbd5e1 !important; }
+        .btn-submit { background: linear-gradient(180deg, #10b981, #059669) !important; color: white !important; box-shadow: 0 4px 0 #047857 !important; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -239,6 +240,8 @@
         <div class="cancel-icon-container">🚫</div>
         <div class="cancel-warning">🚨 YA NO PUEDES CONDUCIR NI OPERAR EN LA UNIDAD MINERA.</div>
         <div class="cancel-subwarning">La prevención no es una regla, es el compromiso de regresar con tu familia.</div>
+        
+        <button class="btn-submit" id="btn-send-fail" onclick="sendDataToGoogleForms()">📤 ENVIAR REPORTE OFICIAL</button>
         <button class="btn-white" onclick="restartGame()">VOLVER A EMPEZAR EL TURNO</button>
     </div>
 
@@ -251,12 +254,23 @@
             <p style="margin:0; font-size: 24px; color: var(--neon-green); font-weight: bold; text-align: center;">PUNTAJE: <span id="final-score">0</span> / 100 PTS</p>
             <p style="font-size: 11px; color: #64748b; margin-top:5px; text-transform: uppercase; text-align: center;">Tu registro está activo para la premiación oficial.</p>
         </div>
-        <button onclick="restartGame()" style="background: linear-gradient(180deg, var(--neon-green), #059669); color: black; box-shadow: 0 4px 0 #047857;">CERRAR TURNO 🔄</button>
+        
+        <button class="btn-submit" id="btn-send-success" onclick="sendDataToGoogleForms()">📤 ENVIAR REPORTE OFICIAL</button>
+        <button onclick="restartGame()" style="background: linear-gradient(180deg, #64748b, #475569); color: white; box-shadow: 0 4px 0 #334155;">INICIAR OTRO TURNO 🔄</button>
     </div>
 </div>
 
 <script>
-    // BANCO DE 32 PREGUNTAS ACTUALIZADO SEGÚN TU LISTA CORREGIDA
+    // =========================================================
+    //  ⚙️ CONFIGURACIÓN TOTALMENTE VINCULADA A TU GOOGLE FORM ⚙️
+    // =========================================================
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSc7hl2RY-znapIiJnFHafVu2_6ba8yb_ZaHZfVJVKXtbDwVdQ/formResponse"; 
+    const ENTRY_ID_NOMBRE  = "entry.1977474946"; 
+    const ENTRY_ID_AREA    = "entry.6768063"; 
+    const ENTRY_ID_DNI     = "entry.856581913"; 
+    const ENTRY_ID_PUNTAJE = "entry.1965062714"; 
+    // =========================================================
+
     const questionBank = [
         {
             icon: "📋", tag: "PRE-USO Y ENTORNO", color: "var(--primary-gold)",
@@ -349,7 +363,7 @@
             family: "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."
         },
         {
-            icon: "↪️", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
+            icon: "↩️", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
             title: "Señal de Curva Pronunciada",
             desc: "Te aproximas a una curva en la tarea con una señal de 20 km/h. La vía se encuentra seca, despejada y cuentas con excelente visibilidad.",
             optA: "A) Respetar estrictamente los 20 km/h indicados. Las velocidades de diseño en curvas son fijas por estabilidad.",
@@ -365,186 +379,6 @@
             optB: "B) Realizar un pare total obligatorio (mínimo 5 segundos), verificar línea de vista y luego avanzar.",
             correct: "B", avatar: "🛑",
             family: "Un segundo de impaciencia puede cambiar nuestras vidas. Detén el equipo por completo ante el PARE."
-        },
-        {
-            icon: "📉", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
-            title: "Señal de Pendiente Pronunciada",
-            desc: "Inicias el descenso en una rampa con fuerte inclinación que cuenta con la señal de advertencia de pendiente del 10%.",
-            optA: "A) Descender en una marcha alta (cambio largo) y controlar la velocidad pisando continuamente el freno.",
-            optB: "B) Enganchar la unidad en una marcha baja (caja reducida) antes de bajar para que el motor controle la velocidad.",
-            correct: "B", avatar: "❤️",
-            family: "No abuses de los frenos en la bajada, mi amor. Usa el motor para frenar y mantén el control."
-        },
-        {
-            icon: "🚫", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
-            title: "Señal de Prohibido Adelantar",
-            desc: "Encuentras una señal de 'Prohibido Adelantar' en un tramo recto de tierra donde el vehículo de adelante va levantando mucho polvo a 15 km/h.",
-            optA: "A) Adelantar rápidamente asumiendo que la señal es solo para la curva que viene más adelante.",
-            optB: "B) Mantener tu posición detrás del vehículo respetando la prohibición vial hasta salir de la zona.",
-            correct: "B", avatar: "🏠",
-            family: "No te adelantes al peligro por desesperación. La señal está ahí para proteger tu vida."
-        },
-        {
-            icon: "🔧", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
-            title: "Velocidad en Zona de Talleres",
-            desc: "Ingresas al área de talleres mecánicos y parqueos de la tarea. No visualizas letreros de velocidad en la entrada, pero hay personal caminando.",
-            optA: "A) Reducir la velocidad al límite máximo establecido para talleres y parqueos (10 a 15 km/h).",
-            optB: "B) Mantener la velocidad estándar de rutas internas (40 km/h) tocando la bocina intermitentemente.",
-            correct: "A", avatar: "🚶",
-            family: "En los talleres caminan tus compañeros de trabajo. Ve despacio, cuida sus vidas y la tuya."
-        },
-        {
-            icon: "🚧", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
-            title: "Letrero de Trabajos en Vía",
-            desc: "Ves una señal provisional de color naranja que advierte 'Trabajos en la vía a 100 metros' pero no se observa operarios trabajando en el punto.",
-            optA: "A) Reducir la marcha de inmediato y estar preparado para detener la unidad ante cualquier imprevisto.",
-            optB: "B) Mantener el ritmo de marcha normal asumiendo que el personal ya se retiró del lugar.",
-            correct: "A", avatar: "👪",
-            family: "Las señales de obra previenen desgracias. Baja la velocidad, no te confíes del camino."
-        },
-        {
-            icon: "🚚", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
-            title: "Velocidad en Berma de Descarga",
-            desc: "Te aproximas con un equipo a la plataforma o berma de descarga de material en la tarea. El terreno se ve nivelado y libre.",
-            optA: "A) Ingresar a la plataforma a 30 km/h para agilizar la maniobra de volteo y el ciclo.",
-            optB: "B) Reducir la velocidad al mínimo reglamentario (máximo 10 km/h) para ingresar a posicionarse.",
-            correct: "B", avatar: "🛡️",
-            family: "La zona de descarga es crítica y el terreno puede ceder. Despacio, asegura cada paso."
-        },
-        {
-            icon: "↕️", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Preferencia en Rampas de la Tarea",
-            desc: "Conduces un vehículo de bajada en una rampa angosta y te encuentras de frente con otra unidad que viene subiendo cargada.",
-            optA: "A) Mantener tu trayectoria obligando a que la unidad de subida reduzca la marcha y se apegue a la berma.",
-            optB: "B) Ceder el paso. Todo vehículo que transita de subida por una rampa tiene la preferencia absoluta.",
-            correct: "B", avatar: "👨‍👩‍👦",
-            family: "Cede el paso al que viene esforzándose en la subida. El reglamento te trae con bien a casa."
-        },
-        {
-            icon: "🚨", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Vehículos de Emergencia",
-            desc: "Escuchas una sirena y ves luces reflejadas en tus espejos. Una ambulancia de la mina se aproxima rápidamente detrás de ti en la ruta.",
-            optA: "A) Acelerar para despejar la ruta rápido y evitar obstruir el paso manteniéndote adelante.",
-            optB: "B) Indicar con luces direccionales, apegarse al lado derecho de la vía y detenerse por completo.",
-            correct: "B", avatar: "❤️",
-            family: "Esa ambulancia va a salvar una vida, dale el paso de inmediato. Alguien espera a ese compañero."
-        },
-        {
-            icon: "🔄", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Rotondas o Óvalos de Distribución",
-            desc: "Vas a ingresar a un óvalo de distribución vial en los accesos. Un equipo ya se encuentra circulando por dentro del óvalo.",
-            optA: "A) Detenerse antes de ingresar. Las unidades que circulan dentro de la rotonda tienen preferencia.",
-            optB: "B) Ingresar al óvalo ganándole el paso antes de que la otra unidad cruce por tu frente.",
-            correct: "A", avatar: "🛑",
-            family: "Respeta los turnos en la vía. Entrar a la fuerza al óvalo puede provocar un choque."
-        },
-        {
-            icon: "🚶", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Cruce de Peatones en Vías",
-            desc: "Un grupo de trabajadores de mantenimiento se dispone a cruzar por el sendero peatonal demarcado en la vía interna de la tarea.",
-            optA: "A) Tocar la bocina repetidamente para avisarles que vas pasando y que esperen a que termines de transitar.",
-            optB: "B) Detener el vehículo completamente antes de la línea y otorgar preferencia absoluta al peatón.",
-            correct: "B", avatar: "🚶",
-            family: "El peatón es el eslabón más débil en la mina. Detén tu unidad, cuida a tus compañeros."
-        },
-        {
-            icon: "⛺", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Salida de Campamento o Parqueo",
-            desc: "Estás listo para salir del estacionamiento del campamento principal e incorporarte a la vía de tránsito interno.",
-            optA: "A) Salir de forma continua aprovechando que tienes espacio antes de que se acerque el vehículo de la vía rápida.",
-            optB: "B) Detenerse por completo y ceder el paso. Los vehículos que transitan por la vía tienen preferencia.",
-            correct: "B", avatar: "🏠",
-            family: "No salgas apurado del parqueo. Mira bien a ambos lados, un choque al iniciar el turno arruina todo."
-        },
-        {
-            icon: "❌", tag: "PREFERENCIAS DE PASO", color: "#a855f7",
-            title: "Preferencia ante Obstáculo en Vía",
-            desc: "En tu carril hay un montículo de tierra por mantenimiento de la vía. Viene un vehículo en sentido contrario por su carril limpio.",
-            optA: "A) Detenerse en tu carril y esperar que el vehículo del sentido contrario pase libremente.",
-            optB: "B) Avanzar rápido e invadir el carril contrario para pasar el obstáculo antes de que la otra unidad llegue.",
-            correct: "A", avatar: "👪",
-            family: "El obstáculo está en tu lado, te toca esperar. No invadas carriles ajenos; regresa sano."
-        },
-        {
-            icon: "↩️", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
-            title: "Giro a la Izquierda",
-            desc: "Necesitas girar a la izquierda para ingresar a un frente de carguío en la tarea. Viene un vehículo en sentido contrario a lo lejos.",
-            optA: "A) Detenerse por completo, esperar que el vehículo en sentido contrario pase y luego girar seguro.",
-            optB: "B) Acelerar y realizar el giro rápido para ganarle el paso al vehículo antes de que llegue al cruce.",
-            correct: "A", avatar: "🛡️",
-            family: "No le ganes el paso al carril contrario. Espera a que la vía esté despejada, no arriesgues tu vida."
-        },
-        {
-            icon: "📐", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
-            title: "Distancia con Equipos en Maniobra",
-            desc: "Un cargador frontal realiza limpieza en una rampa. Debes pasar por el costado de su zona de operación.",
-            optA: "A) Pasar cerca del equipo aprovechando que el operador se detuvo un instante a levantar el cucharón.",
-            optB: "B) Detenerse a distancia segura (30 metros) y esperar que el operador paralice el equipo y dé el pase.",
-            correct: "B", avatar: "🚜",
-            family: "El cucharón del cargador puede moverse inesperadamente. Mantén tu distancia de seguridad."
-        },
-        {
-            icon: "⚡", tag: "LÍNEA DE FUEGO", color: "var(--neon-red)",
-            title: "Cruce de Vías de Alta Tensión",
-            desc: "Operas un equipo y vas a transitar por debajo de una línea de alta tensión aérea señalizada.",
-            optA: "A) Pasar de corrido asumiendo que la tolva bajó por completo porque la luz del tablero ya se apagó.",
-            optB: "B) Confirmar visualmente al 100% que la tolva está totalmente abajo antes de pasar bajo el cableado.",
-            correct: "B", avatar: "❤️",
-            family: "Asegúrate de que todo esté en su lugar antes de avanzar. No ignores los peligros elevados."
-        },
-        {
-            icon: "🔙", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
-            title: "Maniobra de Retroceso",
-            desc: "Vas a retroceder tu camioneta en la zona de operaciones de la tarea para cuadrarte. No cuentas con sensor de retroceso activo.",
-            optA: "A) Activar sensor, tocar tres veces la bocina, esperar 3 segundos, verificar puntos ciegos y retroceder despacio.",
-            optB: "B) Retroceder rápido confiando plenamente en la visibilidad de tus tres espejos retrovisores.",
-            correct: "A", avatar: "🛑",
-            family: "Toca la bocina antes de retroceder, avisa el movimiento. Alguien podría estar oculto detrás."
-        },
-        {
-            icon: "🚛", tag: "MANIOBRAS CRÍTICAS", color: "var(--neon-red)",
-            title: "Adelantamiento a Escoltas",
-            desc: "Alcanzas en la ruta de la tarea a un convoy de camiones pesados que se desplaza escoltado por una camioneta con bandera.",
-            optA: "A) Adelantar a los camiones uno por uno con cuidado cuando veas un espacio libre.",
-            optB: "B) Mantener la posición. Prohibido adelantar a un convoy escoltado sin autorización radial de la escolta.",
-            correct: "B", avatar: "🏠",
-            family: "El convoy se mueve despacio por seguridad de todos. Mantén tu distancia, te esperamos."
-        },
-        {
-            icon: "💡", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
-            title: "Uso de Luces e Indicadores",
-            desc: "Comienza el turno de día y el cielo se encuentra completamente despejado, limpio y soleado.",
-            optA: "A) Apagar las luces principales y circulinas para preservar los componentes eléctricos de la unidad.",
-            optB: "B) Mantener luces y circulinas encendidas las 24 horas del día obligatoriamente.",
-            correct: "B", avatar: "🪪",
-            family: "Hacerte visible en la ruta salva vidas. Enciende todas las luces, queremos que regreses sano."
-        },
-        {
-            icon: "📻", tag: "DISTRACTORES", color: "#3b82f6",
-            title: "Uso de la Radio de Comunicación",
-            desc: "Necesitas reportar tu ingreso a una rampa, pero la frecuencia radial se encuentra saturada con coordinaciones de otra área.",
-            optA: "A) Esperar que la frecuencia quede libre, modular de forma clara, corta y precisa tu mensaje.",
-            optB: "B) Presionar el botón PTT e interrumpir rápidamente para registrar tu ingreso antes de entrar a la rampa.",
-            correct: "A", avatar: "📻",
-            family: "La radio es para coordinar seguridad, no para saturarla. Escucha primero por tu seguridad."
-        },
-        {
-            icon: "🧼", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
-            title: "Parabrisas Sucio o Empañado",
-            desc: "Al iniciar marcha por la mañana, el parabrisas de tu unidad se encuentra lleno de polvo pegado y empañado por el frío.",
-            optA: "A) Arrancar despacio asumiendo que el viento limpiará el vidrio o que se desempañará con la calefacción en ruta.",
-            optB: "B) Limpiar manualmente el parabrisas y esperar el desempañado completo antes de iniciar movimiento.",
-            correct: "B", avatar: "👨‍👩‍👦",
-            family: "Si no ves la ruta, te expones al peligro. Tómate el tiempo de limpiar los vidrios, te esperamos."
-        },
-        {
-            icon: "🦺", tag: "ELEMENTOS DE PROTECCIÓN", color: "#3b82f6",
-            title: "Uso de EPP al Bajar del Vehículo",
-            desc: "Debes descender de la cabina de tu equipo solo por un minuto para recoger un documento del suelo.",
-            optA: "A) Colocarse obligatoriamente casco, lentes, chaleco y zapatos de seguridad antes de abrir la puerta.",
-            optB: "B) Bajar rápido sin casco ni lentes de seguridad, ya que solo pisarás el suelo por unos segundos.",
-            correct: "A", avatar: "🦺",
-            family: "Tu equipo de protección es tu escudo en la mina. No bajes del vehículo desprotegido."
         }
     ];
 
@@ -620,6 +454,11 @@
         document.getElementById('current-score').innerText = score;
         updateLivesDisplay();
         
+        document.getElementById('btn-send-fail').disabled = false;
+        document.getElementById('btn-send-fail').innerText = "📤 ENVIAR REPORTE OFICIAL";
+        document.getElementById('btn-send-success').disabled = false;
+        document.getElementById('btn-send-success').innerText = "📤 ENVIAR REPORTE OFICIAL";
+
         loadQuestion(currentStepIndex);
         showScreen('screen-question');
     }
@@ -682,6 +521,52 @@
                 showScreen('screen-end');
             }
         }
+    }
+
+    function sendDataToGoogleForms() {
+        const formUrl = GOOGLE_FORM_URL;
+        
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        const form = document.createElement('form');
+        form.action = formUrl;
+        form.method = 'POST';
+        form.target = iframe.name = 'invisible_frame';
+
+        const fields = {
+            [ENTRY_ID_NOMBRE]: workerData.name,
+            [ENTRY_ID_DNI]: workerData.dni,
+            [ENTRY_ID_AREA]: workerData.area,
+            [ENTRY_ID_PUNTAJE]: score
+        };
+
+        for (let key in fields) {
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = fields[key];
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+
+        const btnFail = document.getElementById('btn-send-fail');
+        const btnSuccess = document.getElementById('btn-send-success');
+        
+        btnFail.innerText = "✅ REPORTE ENVIADO EXCELENTEMENTE";
+        btnFail.disabled = true;
+        btnSuccess.innerText = "✅ REPORTE ENVIADO EXCELENTEMENTE";
+        btnSuccess.disabled = true;
+
+        alert("SISTEMA ROGASAC: Tu guardia se ha registrado automáticamente. ¡Gracias por prevenir!");
+
+        setTimeout(() => {
+            document.body.removeChild(form);
+            document.body.removeChild(iframe);
+        }, 1000);
     }
 
     function restartGame() {
