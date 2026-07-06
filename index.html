@@ -99,14 +99,11 @@
             align-items: center;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
-        .level-icon {
-            font-size: 45px;
-            margin-bottom: 5px;
-        }
+        .level-icon { font-size: 45px; margin-bottom: 5px; }
         .screen { display: none; }
         .active { display: block; }
         
-        input {
+        input, select {
             width: 100%;
             padding: 15px;
             margin: 8px 0;
@@ -171,7 +168,6 @@
         }
         .clear { clear: both; }
 
-        /* PANTALLA CANCELADA */
         .cancel-title { color: #ef4444; font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 5px; }
         .cancel-subtitle { text-align: center; font-size: 16px; margin-bottom: 20px; }
         .cancel-body { text-align: center; font-size: 14px; color: #cbd5e1; line-height: 1.5; margin-bottom: 25px; }
@@ -180,6 +176,12 @@
         .cancel-subwarning { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 30px; }
         .btn-white { background: #f8fafc !important; color: #0f172a !important; box-shadow: 0 4px 0 #cbd5e1 !important; }
         .btn-submit { background: linear-gradient(180deg, #10b981, #059669) !important; color: white !important; box-shadow: 0 4px 0 #047857 !important; margin-bottom: 10px; }
+        
+        /* Estilos de la Encuesta */
+        .survey-label { font-size: 14px; font-weight: bold; color: var(--primary-gold); margin-top: 15px; display: block; }
+        .star-rating { display: flex; justify-content: space-between; margin: 10px 0; }
+        .star-btn { background: #334155; border: 1px solid #475569; color: white; width: 18%; padding: 10px; text-align: center; border-radius: 8px; box-shadow: none; font-size: 14px; }
+        .star-btn.selected { background: var(--primary-gold); color: #000; font-weight: bold; border-color: white; }
     </style>
 </head>
 <body>
@@ -239,24 +241,64 @@
         <div class="cancel-body">Has acumulado alertas críticas de seguridad en esta simulación y tu turno se ha detenido para priorizar tu vida.</div>
         <div class="cancel-icon-container">🚫</div>
         <div class="cancel-warning">🚨 YA NO PUEDES CONDUCIR NI OPERAR EN LA UNIDAD MINERA.</div>
-        <div class="cancel-subwarning">La prevención no es una regla, es el compromiso de regresar con tu familia.</div>
         
-        <button class="btn-submit" id="btn-send-fail" onclick="sendDataToGoogleForms()">📤 ENVIAR REPORTE OFICIAL</button>
-        <button class="btn-white" onclick="restartGame()">VOLVER A EMPEZAR EL TURNO</button>
+        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA DE CAMPAÑA ➡️</button>
     </div>
 
     <!-- FIN DEL JUEGO (ÉXITO) -->
     <div id="screen-end" class="screen">
         <h2 style="color: var(--neon-green); text-align: center;">🏆 ¡GUARDIA PERFECTA!</h2>
         <p id="congrats-text" style="font-size:14px; line-height: 1.5; text-align: center;"></p>
-        <p style="font-size:14px; text-align: center;">Lograste operar con Cero Accidentes manteniendo tu Licencia Interna del Conductor activa.</p>
         <div style="background: #090d16; padding: 20px; border-radius: 16px; border: 2px solid var(--neon-green); margin: 20px 0;">
             <p style="margin:0; font-size: 24px; color: var(--neon-green); font-weight: bold; text-align: center;">PUNTAJE: <span id="final-score">0</span> / 100 PTS</p>
-            <p style="font-size: 11px; color: #64748b; margin-top:5px; text-transform: uppercase; text-align: center;">Tu registro está activo para la premiación oficial.</p>
         </div>
         
-        <button class="btn-submit" id="btn-send-success" onclick="sendDataToGoogleForms()">📤 ENVIAR REPORTE OFICIAL</button>
-        <button onclick="restartGame()" style="background: linear-gradient(180deg, #64748b, #475569); color: white; box-shadow: 0 4px 0 #334155;">INICIAR OTRO TURNO 🔄</button>
+        <button class="btn-submit" onclick="goToSurvey()">CONTINUAR A LA ENCUESTA DE CAMPAÑA ➡️</button>
+    </div>
+
+    <!-- PANTALLA NUEVA: ENCUESTA DE MEDICIÓN DE LA CAMPAÑA -->
+    <div id="screen-survey" class="screen">
+        <h2 style="color: var(--primary-gold); text-align: center; margin-top: 0;">📊 EVALUACIÓN DE LA CAMPAÑA</h2>
+        <p style="font-size: 13px; color: #94a3b8; text-align: center; margin-bottom: 20px;">Ayúdanos a medir el impacto de la campaña "Yo escucho a la prevención".</p>
+        
+        <!-- P1: Escala -->
+        <label class="survey-label">1. ¿El juego te ayudó a recordar los riesgos críticos de tu ruta o frente?</label>
+        <div class="star-rating">
+            <button type="button" class="star-btn" onclick="selectRating(1)">1</button>
+            <button type="button" class="star-btn" onclick="selectRating(2)">2</button>
+            <button type="button" class="star-btn" onclick="selectRating(3)">3</button>
+            <button type="button" class="star-btn" onclick="selectRating(4)">4</button>
+            <button type="button" class="star-btn" onclick="selectRating(5)">5</button>
+        </div>
+        <p style="display:flex; justify-content:space-between; font-size:11px; color:#64748b; margin-top:-5px; padding:0 5px;"><span>Muy poco</span><span>¡Excelente ayuda!</span></p>
+
+        <!-- P2: Lista Desplegable -->
+        <label class="survey-label" style="margin-top:20px;">2. ¿Qué te pareció este formato interactivo frente a las charlas comunes?</label>
+        <select id="survey-p2">
+            <option value="">-- Selecciona una opción --</option>
+            <option value="Mucho más dinámico e interesante">Mucho más dinámico e interesante</option>
+            <option value="Igual que una charla tradicional">Igual que una charla tradicional</option>
+            <option value="Prefiero folletos impresos">Prefiero folletos impresos</option>
+        </select>
+
+        <!-- P3: Botones Radiales Dinámicos -->
+        <label class="survey-label" style="margin-top:20px;">3. ¿Los mensajes de alerta de tu familia te hicieron reflexionar?</label>
+        <select id="survey-p3">
+            <option value="">-- Selecciona una opción --</option>
+            <option value="Sí, me hicieron pensar en mi hogar">Sí, me hicieron pensar en mi hogar</option>
+            <option value="No, los consideré irrelevantes">No, los consideré irrelevantes</option>
+        </select>
+
+        <button class="btn-submit" id="btn-final-send" onclick="sendAllDataToGoogle()" style="margin-top: 30px;">📤 ENVIAR TODO Y TERMINAR GUARDIA</button>
+    </div>
+
+    <!-- PANTALLA FINAL DE AGRADECIMIENTO -->
+    <div id="screen-thanks" class="screen" style="text-align: center;">
+        <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+        <h2 style="color: var(--neon-green);">¡REPORTE Y ENCUESTA ENVIADOS!</h2>
+        <p style="font-size: 15px; color: #cbd5e1; line-height: 1.6;">Tu participación ha sido registrada de forma exitosa en el sistema central de la campaña.</p>
+        <p style="font-size: 14px; color: var(--primary-gold); font-weight: bold; margin-top: 30px;">¡Gracias por tu compromiso con la seguridad! Regresa a casa a salvo.</p>
+        <button onclick="restartGame()" style="background: linear-gradient(180deg, #64748b, #475569); color: white; box-shadow: 0 4px 0 #334155; margin-top:40px;">INICIAR OTRO TURNO 🔄</button>
     </div>
 </div>
 
@@ -269,6 +311,11 @@
     const ENTRY_ID_AREA    = "entry.6768063"; 
     const ENTRY_ID_DNI     = "entry.856581913"; 
     const ENTRY_ID_PUNTAJE = "entry.1965062714"; 
+
+    // ⚠️ DEBES REEMPLAZAR ESTOS CUATRO ESPACIOS CUANDO ME PASES EL LINK PRELLENADO:
+    const ENTRY_ID_P1      = "entry.REEMPLAZAR_CON_ID_P1"; 
+    const ENTRY_ID_P2      = "entry.REEMPLAZAR_CON_ID_P2"; 
+    const ENTRY_ID_P3      = "entry.REEMPLAZAR_CON_ID_P3"; 
     // =========================================================
 
     const questionBank = [
@@ -361,24 +408,6 @@
             optB: "B) Abrocharse el cinturón. Su uso es obligatorio en todo momento y distancia sin excepciones.",
             correct: "B", avatar: "🛡️",
             family: "Ese simple 'clic' es el lazo que te une a nosotros. Úsalo siempre, por más corto que sea el camino."
-        },
-        {
-            icon: "↩️", tag: "VELOCIDAD EN RUTA", color: "var(--primary-gold)",
-            title: "Señal de Curva Pronunciada",
-            desc: "Te aproximas a una curva en la tarea con una señal de 20 km/h. La vía se encuentra seca, despejada y cuentas con excelente visibilidad.",
-            optA: "A) Respetar estrictamente los 20 km/h indicados. Las velocidades de diseño en curvas son fijas por estabilidad.",
-            optB: "B) Mantener 35 km/h para agilizar el ciclo de carguío aprovechando que la vía está en buen estado.",
-            correct: "A", avatar: "👨‍👩‍👦",
-            family: "Hijo, las curvas en la mina no perdonan el exceso de velocidad. Respeta la señalización."
-        },
-        {
-            icon: "🛑", tag: "SEÑALIZACIÓN VIAL", color: "var(--primary-gold)",
-            title: "Señal de Pare en Intersección",
-            desc: "Llegas a un cruce interno con señal de 'PARE'. Miras a ambos lados y confirmas que no viene ningún equipo por la vía preferencial.",
-            optA: "A) Reducir un poco la velocidad y pasar despacio para no perder la inercia del vehículo.",
-            optB: "B) Realizar un pare total obligatorio (mínimo 5 segundos), verificar línea de vista y luego avanzar.",
-            correct: "B", avatar: "🛑",
-            family: "Un segundo de impaciencia puede cambiar nuestras vidas. Detén el equipo por completo ante el PARE."
         }
     ];
 
@@ -387,9 +416,9 @@
     let lives = 3;
     let errorInLevel = false;
     let audioCtx = null;
-    
     let currentQuestions = [];
     let currentStepIndex = 0;
+    let selectedRatingP1 = 0;
 
     function playSound(type) {
         try {
@@ -425,10 +454,10 @@
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         
-        if (id === 'screen-register' || id === 'screen-end' || id === 'screen-gameover') {
-            document.getElementById('stats-viewer').style.display = 'none';
-        } else {
+        if (id === 'screen-question') {
             document.getElementById('stats-viewer').style.display = 'block';
+        } else {
+            document.getElementById('stats-viewer').style.display = 'none';
         }
     }
 
@@ -448,16 +477,15 @@
         workerData = { name, dni, area };
         score = 0; lives = 3; errorInLevel = false;
         currentStepIndex = 0;
+        selectedRatingP1 = 0;
         
+        document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('selected'));
+        if(document.getElementById('survey-p2')) document.getElementById('survey-p2').value = '';
+        if(document.getElementById('survey-p3')) document.getElementById('survey-p3').value = '';
+
         currentQuestions = getRandomQuestions(questionBank, 10);
-        
         document.getElementById('current-score').innerText = score;
         updateLivesDisplay();
-        
-        document.getElementById('btn-send-fail').disabled = false;
-        document.getElementById('btn-send-fail').innerText = "📤 ENVIAR REPORTE OFICIAL";
-        document.getElementById('btn-send-success').disabled = false;
-        document.getElementById('btn-send-success').innerText = "📤 ENVIAR REPORTE OFICIAL";
 
         loadQuestion(currentStepIndex);
         showScreen('screen-question');
@@ -469,7 +497,6 @@
         setProgressBar(index + 1);
         
         const q = currentQuestions[index];
-        
         document.getElementById('lvl-icon').innerText = q.icon;
         document.getElementById('lvl-tag').innerText = q.tag;
         document.getElementById('lvl-graphic-box').style.borderLeft = `5px solid ${q.color}`;
@@ -478,7 +505,6 @@
         
         const btnA = document.getElementById('btn-opt-a');
         const btnB = document.getElementById('btn-opt-b');
-        
         btnA.innerText = q.optA;
         btnB.innerText = q.optB;
         
@@ -501,7 +527,7 @@
             }
             
             if (lives <= 0) {
-                document.getElementById('gameover-name').innerText = workerData.name || "Colaborador";
+                document.getElementById('gameover-name').innerText = workerData.name;
                 setTimeout(() => { showScreen('screen-gameover'); }, 2500); 
             }
         } else {
@@ -510,36 +536,59 @@
                 score += 10;
                 document.getElementById('current-score').innerText = score;
             }
-            
             currentStepIndex++;
             
             if (currentStepIndex < 10) {
                 loadQuestion(currentStepIndex);
             } else {
-                document.getElementById('congrats-text').innerHTML = `Colaborador: <strong>${workerData.name}</strong><br>Área/Tarea: <strong>${workerData.area}</strong><br>DNI: <strong>${workerData.dni}</strong>`;
+                document.getElementById('congrats-text').innerHTML = `Colaborador: <strong>${workerData.name}</strong><br>Área: <strong>${workerData.area}</strong>`;
                 document.getElementById('final-score').innerText = score;
                 showScreen('screen-end');
             }
         }
     }
 
-    function sendDataToGoogleForms() {
-        const formUrl = GOOGLE_FORM_URL;
-        
+    function goToSurvey() {
+        showScreen('screen-survey');
+    }
+
+    function selectRating(num) {
+        selectedRatingP1 = num;
+        document.querySelectorAll('.star-btn').forEach((b, idx) => {
+            if(idx === (num - 1)) b.classList.add('selected');
+            else b.classList.remove('selected');
+        });
+    }
+
+    function sendAllDataToGoogle() {
+        const p2 = document.getElementById('survey-p2').value;
+        const p3 = document.getElementById('survey-p3').value;
+
+        if(selectedRatingP1 === 0 || !p2 || !p3) {
+            alert("Por favor, responde las 3 preguntas de la encuesta para cerrar oficialmente tu reporte de guardia.");
+            return;
+        }
+
+        document.getElementById('btn-final-send').innerText = "PROCESANDO REPORTE GENERAL...";
+        document.getElementById('btn-final-send').disabled = true;
+
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
         const form = document.createElement('form');
-        form.action = formUrl;
+        form.action = GOOGLE_FORM_URL;
         form.method = 'POST';
-        form.target = iframe.name = 'invisible_frame';
+        form.target = iframe.name = 'invisible_frame_survey';
 
         const fields = {
             [ENTRY_ID_NOMBRE]: workerData.name,
             [ENTRY_ID_DNI]: workerData.dni,
             [ENTRY_ID_AREA]: workerData.area,
-            [ENTRY_ID_PUNTAJE]: score
+            [ENTRY_ID_PUNTAJE]: score,
+            [ENTRY_ID_P1]: selectedRatingP1,
+            [ENTRY_ID_P2]: p2,
+            [ENTRY_ID_P3]: p3
         };
 
         for (let key in fields) {
@@ -553,27 +602,17 @@
         document.body.appendChild(form);
         form.submit();
 
-        const btnFail = document.getElementById('btn-send-fail');
-        const btnSuccess = document.getElementById('btn-send-success');
-        
-        btnFail.innerText = "✅ REPORTE ENVIADO EXCELENTEMENTE";
-        btnFail.disabled = true;
-        btnSuccess.innerText = "✅ REPORTE ENVIADO EXCELENTEMENTE";
-        btnSuccess.disabled = true;
-
-        alert("SISTEMA ROGASAC: Tu guardia se ha registrado automáticamente. ¡Gracias por prevenir!");
-
         setTimeout(() => {
             document.body.removeChild(form);
             document.body.removeChild(iframe);
-        }, 1000);
+            showScreen('screen-thanks');
+        }, 1200);
     }
 
     function restartGame() {
         document.getElementById('worker-name').value = '';
         document.getElementById('worker-dni').value = '';
         document.getElementById('worker-area').value = '';
-        document.getElementById('family-popup').style.display = 'none';
         showScreen('screen-register');
     }
 </script>
